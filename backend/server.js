@@ -15,4 +15,9 @@ mongoose.connect(process.env.MONGODB_URI)
 app.use(express.json());
 app.use(cors());
 
+// Rotas
+
+import tarefasRouter from "./routes/tarefas.js"
+app.use("/tarefas", tarefasRouter)
+
 app.listen(PORT, () => console.log(`Servidor iniciado na porta ${PORT}`));
