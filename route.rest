@@ -1,1 +1,27 @@
 GET http://localhost:5005/tarefas
+
+###
+
+POST http://localhost:5005/tarefas
+Content-Type: application/json
+
+{
+  "title": "Tarefa Exemplo",
+  "desc": "Fazer um exemplo",
+  "subtarefas": ["Colorir de verde", "Desenhar borda"],
+  "classficacao": "Em andamento"
+}
+
+### 
+DELETE http://localhost:5005/tarefas/667f4077285ec2b8ebab4fce
+
+###
+PATCH http://localhost:5005/tarefas/667f404afc71e0980cbfbd0f
+Content-Type: application/json
+
+{
+    "title": "Tarefa 2",
+  "desc": "Fazer uma interface",
+  "subtarefas": ["Colorir de azul", "Não desenhar"],
+  "classficacao": "Concluido"
+}
