@@ -1,11 +1,11 @@
-import React from 'react'
 import styled from 'styled-components'
-import IcnOpt from "../assets/icnOpt.svg?react"
+import IcnOpt from "../../assets/icnOpt.svg?react"
 
 const MainHeader = styled.header`
+  transition: 0.5s;
   position: fixed;
   right: 0;
-  width: calc(100% - 341px);
+  width: ${props => props.recolherSide ? 'calc(100% - 191px)' : 'calc(100% - 341px)'};
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -28,17 +28,4 @@ const ButtonContainer = styled.div`
   align-items: center;
 `
 
-
-const Header = () => {
-  return (
-    <MainHeader >
-      <h1>Quadro 1</h1>
-      <ButtonContainer >
-        <button className='btn'>+ Adicionar Tarefa</button>
-        <IconOption />
-      </ButtonContainer>
-    </MainHeader>
-  )
-}
-
-export default Header
+export {MainHeader, ButtonContainer, IconOption};

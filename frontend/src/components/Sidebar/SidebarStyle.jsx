@@ -1,19 +1,15 @@
-import React from 'react'
-import styled from 'styled-components';
-import Logo from "../assets/Logo.svg?react"
-import icnQuadro from "../assets/icnQuadro.svg?react"
-import icnQuadroRoxo from "../assets/icnQuadroRoxo.svg"
-import icnHide from "../assets/icnHide.svg"
-import icnLight from "../assets/icnLight.svg"
-import icnDark from "../assets/icnDark.svg"
+import styled from "styled-components"
+import Logo from "../../assets/Logo.svg?react"
+import icnQuadro from "../../assets/icnQuadro.svg?react"
 
 const StyledSidebar = styled.div`
+transition: 0.5s;
   padding: 15px;
   position: fixed;
   top: 0;
   left: 0;
   height: 100%;
-  width: 250px;
+  width: ${props => (props.recolherSide ? "100px" : "250px")};
   background: #323033;
   display: flex;
   flex-direction: column;
@@ -34,6 +30,7 @@ const StyledSidebar = styled.div`
   }
 ` 
   const StyledList = styled.ul`
+    display: ${props => (props.isRecolher ? "none" : "block")};
     padding: 15px 0;
     margin-left: -15px;
     max-height: 300px;
@@ -81,6 +78,9 @@ const IcnQuadro = styled(icnQuadro)`
 `
 
 const QuadrosContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `
 
 const SwitchTheme = styled.div`
@@ -129,33 +129,4 @@ const ThemeSlider = styled.input`
   }
 `
 
-const Sidebar = () => {
-  return (
-    <StyledSidebar >
-      <QuadrosContainer>
-        <StyledLogo />
-          <h3>Todos os quadros (3)</h3>
-          <StyledList >
-            <li className='current'><IcnQuadro />Quadro 1</li>
-            <li><IcnQuadro />Quadro 2</li>
-            <li><IcnQuadro />Quadro 3</li>
-          </StyledList>
-        <p><img src={icnQuadroRoxo} alt="Quadro" /><span>+ Criar Novo Quadro</span></p>
-      </QuadrosContainer>
-      <SwitchTheme>
-        <div>
-          <img src={icnLight} alt="Claro" />
-          <ThemeSlider
-              type="range"
-              min="0"
-              max="1"
-          />
-          <img src={icnDark} alt="Escuro" />
-        </div>
-        <p><img src={icnHide} alt="Esconder" />Esconder Barra</p>
-      </SwitchTheme>
-    </StyledSidebar>
-  )
-}
-
-export default Sidebar;
+export  {StyledSidebar, QuadrosContainer, StyledLogo, StyledList, IcnQuadro,  SwitchTheme, ThemeSlider};
