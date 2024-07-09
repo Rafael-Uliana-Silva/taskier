@@ -3,6 +3,7 @@ import styled, { keyframes } from 'styled-components'
 import PropTypes from "prop-types";
 import FormQuadro from './FormQuadro';
 import FormTarefa from './FormTarefa';
+import FormColuna from './FormColuna';
 
 const slideDown = keyframes`
   from {
@@ -72,6 +73,9 @@ const Modal = ({ fecharModal, type }) => {
         )}
         {type === 'tarefa' && (
           <FormTarefa />
+        )}
+        {type === 'coluna' && (
+          <FormColuna />
         )}
       </ModalContent>
     </ModalContainer>

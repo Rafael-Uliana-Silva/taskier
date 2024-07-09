@@ -1,0 +1,32 @@
+import styled from "styled-components"
+
+const HomeContainer = styled.div`
+  display: flex;
+  overflow-y: auto;
+  padding: 30px 30px 30px 50px;
+  margin-left: ${props => (props.recolherSide ? '100px' : '250px')};
+  transition: margin-left 0.5s;
+`
+
+const NovaColuna = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #2D2D2E;
+  padding: 30px;
+  height: 600px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-right: 30px;
+  transition: 0.3s;
+  h2 {
+    color: #707070;
+    width: 200px;
+    text-align: center;
+  }
+  &&:hover{
+    scale: 102%;
+  }
+`
+
+export { HomeContainer, NovaColuna };
