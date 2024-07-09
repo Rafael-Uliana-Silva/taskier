@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { StyledSidebar, QuadrosContainer, StyledLogo, StyledList, IcnQuadro, SwitchTheme, ThemeSlider } from './SidebarStyle.jsx';
 import { icnQuadroRoxo, icnHide, icnLight, icnDark } from "./SidebarIcons.jsx";
 
-const Sidebar = ({ recolherSide, toggleSidebar }) => {
+const Sidebar = ({ recolherSide, toggleSidebar, abrirModal }) => {
   return (
     <StyledSidebar recolherSide={recolherSide}>
       {!recolherSide && (
@@ -17,7 +17,7 @@ const Sidebar = ({ recolherSide, toggleSidebar }) => {
           </StyledList>
           <p>
             <img src={icnQuadroRoxo} alt="Quadro" />
-            <span>+ Criar Novo Quadro</span>
+            <span onClick={abrirModal}>+ Criar Novo Quadro</span>
           </p>
         </QuadrosContainer>
       )}
@@ -40,6 +40,7 @@ const Sidebar = ({ recolherSide, toggleSidebar }) => {
 Sidebar.propTypes = {
   recolherSide: PropTypes.bool.isRequired,
   toggleSidebar: PropTypes.func.isRequired,
+  abrirModal: PropTypes.func.isRequired,
 };
 
 export default Sidebar;
