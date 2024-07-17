@@ -6,7 +6,7 @@ const MainHeader = styled.header`
   position: fixed;
   right: 0;
   top: 0;
-  width: ${props => props.recolherSide ? 'calc(100% - 180px)' : 'calc(100% - 340px)'};
+  width: ${({ $recolherSide }) => $recolherSide ? 'calc(100% - 180px)' : 'calc(100% - 340px)'};
   display: flex;
   justify-content: space-between;
   align-items: center;

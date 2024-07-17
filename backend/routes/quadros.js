@@ -1,166 +1,59 @@
-
 import express from 'express';
-import { MongoClient } from 'mongodb';  // Importar MongoClient para criar uma nova base de dados
-import dotenv from 'dotenv';
-
-dotenv.config();
+import mongoose from 'mongoose';
+import Quadro from '../models/quadro.js'
 
 const router = express.Router();
-const uri = process.env.MONGODB_URI;  // URL de conexão ao MongoDB
 
-// Middleware para conectar ao MongoDB
-const connectToMongo = async (dbName) => {
-  try {
-    const client = new MongoClient(uri, { useUnifiedTopology: true });
-    await client.connect();
-    return client.db(dbName);  // Retorna a base de dados especificada
-  } catch (err) {
-    console.error("Erro ao conectar ao MongoDB:", err);
-    throw new Error('Erro ao conectar ao MongoDB');
-  }
-};
-
-// Função para validar e sanitizar o nome da base de dados
-const sanitizeDatabaseName = (name) => {
-  // Remove caracteres inválidos e espaços
-  return name.trim().replace(/[^a-zA-Z0-9_]/g, '_');  // Substitui caracteres inválidos por '_'
-};
-
-// Rota para criar uma nova base de dados com o nome do título
-router.post('/create-database', async (req, res) => {
+// Endpoint para criar uma nova coleção
+router.post('/', async (req, res) => {
   const { nome } = req.body;
 
   if (!nome) {
-    return res.status(400).json({ message: 'Título é obrigatório' });
+    return res.status(400).json({ message: 'Nome da coleção é obrigatório' });
   }
 
-  const sanitizedNome = sanitizeDatabaseName(nome);
-
   try {
-    const db = await connectToMongo(sanitizedNome);
-    await db.createCollection('quadros');
-    res.status(201).json({ message: `Base de dados ${sanitizedNome} criada com sucesso.` });
+    // Cria uma nova coleção
+    const db = mongoose.connection.db;
+    await db.createCollection(nome);
+
+    // Responde com uma mensagem de sucesso
+    res.status(201).json({ message: `Coleção '${nome}' criada com sucesso` });
   } catch (err) {
-    res.status(500).json({ message: 'Erro ao criar a base de dados.', error: err.message });
-    console.error("Erro ao criar a base de dados:", err);
+    res.status(500).json({ message: `Houve um erro ao criar a coleção: ${err.message}` });
+    console.log(err);
   }
 });
 
-// Buscar todos os quadros
+// Endpoint para listar todas as coleções
 router.get('/', async (req, res) => {
-  const { dbName } = req.query;
-
-  if (!dbName) {
-    return res.status(400).json({ message: 'Nome da base de dados é obrigatório' });
-  }
-
   try {
-    const db = await connectToMongo(dbName);
-    const quadrosCollection = db.collection('quadros');
-    const quadros = await quadrosCollection.find().toArray();
-    res.json(quadros);
-  } catch (err) {
-    res.status(500).json({ message: 'Erro ao buscar quadros', error: err.message });
-    console.error("Erro ao buscar quadros:", err);
+    const db = mongoose.connection.db; // Acesso ao banco de dados
+    const collections = await db.listCollections().toArray();
+    res.json(collections.map(c => ({ id: c.name, name: c.name }))); // Envia a lista de coleções
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao listar as coleções.', error: error.message });
   }
 });
 
-// Buscar um quadro específico por ID
-router.get('/:id', async (req, res) => {
-  const { id } = req.params;
-  const { dbName } = req.query;
-
-  if (!dbName) {
-    return res.status(400).json({ message: 'Nome da base de dados é obrigatório' });
-  }
+router.get('/:collectionName', async (req, res) => {
+  const { collectionName } = req.params;
 
   try {
-    const db = await connectToMongo(dbName);
-    const quadrosCollection = db.collection('quadros');
-    const quadro = await quadrosCollection.findOne({ _id: new ObjectId(id) });
+    const db = mongoose.connection.db;
+    const collection = db.collection(collectionName);
+    const documents = await collection.find({}).toArray();
 
-    if (!quadro) {
-      return res.status(404).json({ message: 'Quadro não encontrado' });
+    if (!documents) {
+      return res.status(404).json({ message: `Coleção '${collectionName}' não encontrada ou está vazia` });
     }
 
-    res.json(quadro);
+    res.json(documents);
   } catch (err) {
-    res.status(500).json({ message: 'Erro ao buscar o quadro', error: err.message });
-    console.error("Erro ao buscar o quadro:", err);
+    res.status(500).json({ message: `Erro ao buscar documentos da coleção '${collectionName}': ${err.message}` });
+    console.log(err);
   }
 });
 
-// Criar um novo quadro
-router.post('/', async (req, res) => {
-  const { nome, dbName } = req.body;
-
-  if (!nome || !dbName) {
-    return res.status(400).json({ message: 'Nome e nome da base de dados são obrigatórios' });
-  }
-
-  try {
-    const db = await connectToMongo(dbName);
-    const quadrosCollection = db.collection('quadros');
-    const novoQuadro = { nome };
-    await quadrosCollection.insertOne(novoQuadro);
-    res.status(201).json(novoQuadro);
-  } catch (err) {
-    res.status(500).json({ message: 'Erro ao criar o quadro', error: err.message });
-    console.error("Erro ao criar o quadro:", err);
-  }
-});
-
-// Atualizar um quadro específico por ID
-router.patch('/:id', async (req, res) => {
-  const { id } = req.params;
-  const { nome, dbName } = req.body;
-
-  if (!nome || !dbName) {
-    return res.status(400).json({ message: 'Nome e nome da base de dados são obrigatórios' });
-  }
-
-  try {
-    const db = await connectToMongo(dbName);
-    const quadrosCollection = db.collection('quadros');
-    const result = await quadrosCollection.updateOne(
-      { _id: new ObjectId(id) },
-      { $set: { nome } }
-    );
-
-    if (result.matchedCount === 0) {
-      return res.status(404).json({ message: 'Quadro não encontrado' });
-    }
-
-    res.json({ message: 'Quadro atualizado com sucesso' });
-  } catch (err) {
-    res.status(500).json({ message: 'Erro ao atualizar o quadro', error: err.message });
-    console.error("Erro ao atualizar o quadro:", err);
-  }
-});
-
-// Deletar um quadro específico por ID
-router.delete('/:id', async (req, res) => {
-  const { id } = req.params;
-  const { dbName } = req.query;
-
-  if (!dbName) {
-    return res.status(400).json({ message: 'Nome da base de dados é obrigatório' });
-  }
-
-  try {
-    const db = await connectToMongo(dbName);
-    const quadrosCollection = db.collection('quadros');
-    const result = await quadrosCollection.deleteOne({ _id: new ObjectId(id) });
-
-    if (result.deletedCount === 0) {
-      return res.status(404).json({ message: 'Quadro não encontrado' });
-    }
-
-    res.json({ message: 'Quadro deletado com sucesso' });
-  } catch (err) {
-    res.status(500).json({ message: 'Erro ao deletar o quadro', error: err.message });
-    console.error("Erro ao deletar o quadro:", err);
-  }
-});
 
 export default router;

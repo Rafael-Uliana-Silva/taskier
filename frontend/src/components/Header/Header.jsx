@@ -4,7 +4,7 @@ import { MainHeader, ButtonContainer, IconOption } from "./HeaderStyle.jsx"
 
 const Header = ({ recolherSide, abrirModal }) => {
   return (
-    <MainHeader recolherSide={recolherSide}>
+    <MainHeader $recolherSide={recolherSide}>
       <h1>Quadro 1</h1>
       <ButtonContainer >
         <button className='btn' onClick={abrirModal}>+ Adicionar Tarefa</button>
@@ -16,7 +16,7 @@ const Header = ({ recolherSide, abrirModal }) => {
 
 Header.propTypes = {
   recolherSide: PropTypes.bool.isRequired,
-  abrirModal: PropTypes.bool.isRequired,
+  abrirModal: PropTypes.func.isRequired,
 };
 
 export default Header;

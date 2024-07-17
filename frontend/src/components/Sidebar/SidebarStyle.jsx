@@ -9,7 +9,7 @@ const StyledSidebar = styled.div`
   top: 0;
   left: 0;
   height: 100%;
-  width: ${props => (props.recolherSide ? '100px' : '250px')};
+  width: ${({ $recolherSide }) =>  $recolherSide ? '100px' : '250px'};
   background: #323033;
   display: flex;
   flex-direction: column;
@@ -36,11 +36,10 @@ const StyledSidebar = styled.div`
 
 const StyledList = styled.ul`
   display: ${props => (props.isRecolher ? 'none' : 'block')};
-  padding: 15px 0;
   margin-left: -15px;
+  margin-bottom: 30px;
   max-height: 300px;
   overflow-y: auto;
-
   li, p {
     color: #707070;
     margin: 30px 0;

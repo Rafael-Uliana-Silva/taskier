@@ -17,11 +17,12 @@ app.use(cors());
 
 // Rotas
 
-import tarefasRouter from "./routes/tarefas.js"
 import quadrosRouter from "./routes/quadros.js"
 import colunasRouter from "./routes/colunas.js"
-app.use("/tarefas", tarefasRouter)
+import tarefasRouter from "./routes/tarefas.js"
 app.use("/quadros", quadrosRouter)
-app.use("/colunas", colunasRouter)
+app.use("/quadros/colunas", colunasRouter)
+app.use("/quadros/tarefas", tarefasRouter)
+
 
 app.listen(PORT, () => console.log(`Servidor iniciado na porta ${PORT}`));

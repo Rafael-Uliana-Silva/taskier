@@ -1,19 +1,34 @@
 import React from 'react';
 import PropTypes from "prop-types";
+import axios from 'axios';
 import { StyledSidebar, QuadrosContainer, StyledLogo, StyledList, IcnQuadro, SwitchTheme, ThemeSlider } from './SidebarStyle.jsx';
 import { icnQuadroRoxo, icnHide, icnLight, icnDark } from "./SidebarIcons.jsx";
 
 const Sidebar = ({ recolherSide, toggleSidebar, abrirModal }) => {
+  const [quadros, setQuadros] = React.useState([]);
+
+  React.useEffect(() => {
+    const fetchQuadros = async () => {
+      try{
+        const response = await axios.get("http://localhost:5005/quadros")
+        setQuadros(response.data)
+      } catch(err) {
+        console.log(err)
+      }
+    }
+    fetchQuadros()
+  }, [])
+
   return (
-    <StyledSidebar recolherSide={recolherSide}>
+    <StyledSidebar $recolherSide={recolherSide}>
       {!recolherSide && (
         <QuadrosContainer>
           <StyledLogo />
-          <h3>Todos os quadros (3)</h3>
+          <h3>Todos os quadros ({quadros.length})</h3>
           <StyledList>
-            <li className='current'><IcnQuadro />Quadro 1</li>
-            <li><IcnQuadro />Quadro 2</li>
-            <li><IcnQuadro />Quadro 3</li>
+            {quadros.map((quadro) => 
+              <li key={quadro.id} className='current'><IcnQuadro /> {quadro.name}</li>
+            )}
           </StyledList>
           <p>
             <img src={icnQuadroRoxo} alt="Quadro" />

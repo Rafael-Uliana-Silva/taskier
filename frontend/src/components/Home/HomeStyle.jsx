@@ -1,10 +1,11 @@
 import styled from "styled-components"
 
 const HomeContainer = styled.div`
+  margin-top: 60px;
   display: flex;
   overflow-y: auto;
   padding: 30px 30px 30px 50px;
-  margin-left: ${props => (props.recolherSide ? '100px' : '250px')};
+  margin-left: ${({ $recolherSide }) => $recolherSide ? '100px' : '250px'};
   transition: margin-left 0.5s;
 `
 

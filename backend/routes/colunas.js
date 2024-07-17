@@ -20,11 +20,9 @@ router.get('/:id', getColunaById, (req, res) => {
 // Criar uma nova coluna
 router.post('/', async (req, res) => {
   const { nome, cor } = req.body;
-
   if (!nome || !cor) {
     return res.status(400).json({ message: 'Nome e cor são obrigatórios' });
   }
-
   try {
     const novaColuna = new Coluna({ nome, cor });
     await novaColuna.save();

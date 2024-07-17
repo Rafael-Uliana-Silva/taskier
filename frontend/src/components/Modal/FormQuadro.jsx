@@ -14,7 +14,7 @@ const FormQuadro = () => {
     event.preventDefault();  
     setLoading(true);  
     try {
-      const response = await axios.post("http://localhost:5005/quadros/create-database", { nome: title });
+      const response = await axios.post("http://localhost:5005/quadros", { nome: title });
       console.log("Resposta do servidor:", response.data);
       setTitle('');
     } catch (err) {

@@ -4,7 +4,7 @@ import { HomeContainer, NovaColuna } from './HomeStyle.jsx'
 
 const Home = ({ recolherSide, abrirModal }) => {
   return (
-    <HomeContainer recolherSide={recolherSide}>
+    <HomeContainer $recolherSide={recolherSide}>
       <NovaColuna onClick={abrirModal}>
         <h2>+ Nova Coluna</h2>  
       </NovaColuna>  
@@ -14,7 +14,7 @@ const Home = ({ recolherSide, abrirModal }) => {
 
 Home.propTypes = {
   recolherSide: PropTypes.bool.isRequired,
-  abrirModal: PropTypes.bool.isRequired,
+  abrirModal: PropTypes.func.isRequired,
 };
 
 export default Home;
