@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { HomeContainer, NovaColuna } from './HomeStyle.jsx'
 
 const Home = ({ recolherSide, abrirModal }) => {
+
   return (
     <HomeContainer $recolherSide={recolherSide}>
       <NovaColuna onClick={abrirModal}>

@@ -17,11 +17,11 @@ const FormColuna = () => {
     event.preventDefault()
 
     try {
-      await axios.post("http://localhost:5005/quadros", { nome: title, cor: color });  // Enviando title e color para o backend
+      await axios.post("http://localhost:5005/quadros/colunas", { nome: title, cor: color }); 
       setTitle('');
       setColor('#ffffff');
     } catch (err) {
-      console.error('Erro ao criar coluna:', err.response?.data || err.message);  // Log do erro para depuração
+      console.error('Erro ao criar coluna:', err.response?.data || err.message);  
     } 
   }
 

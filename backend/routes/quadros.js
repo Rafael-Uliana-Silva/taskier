@@ -36,22 +36,20 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/:collectionName', async (req, res) => {
-  const { collectionName } = req.params;
+router.get('/:id', async (req, res) => {
+  const { id } = req.params; 
 
   try {
     const db = mongoose.connection.db;
-    const collection = db.collection(collectionName);
-    const documents = await collection.find({}).toArray();
+    const collections = await db.listCollections({ name: id }).toArray(); 
 
-    if (!documents) {
-      return res.status(404).json({ message: `Coleção '${collectionName}' não encontrada ou está vazia` });
+    if (collections.length === 0) {
+      res.status(404).json({ message: 'Coleção não encontrada.' });
+    } else {
+      res.json({ id: collections[0].name, name: collections[0].name });
     }
-
-    res.json(documents);
-  } catch (err) {
-    res.status(500).json({ message: `Erro ao buscar documentos da coleção '${collectionName}': ${err.message}` });
-    console.log(err);
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao buscar a coleção.', error: error.message });
   }
 });
 

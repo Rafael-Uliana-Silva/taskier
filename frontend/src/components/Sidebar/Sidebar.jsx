@@ -1,11 +1,16 @@
 import React from 'react';
 import PropTypes from "prop-types";
 import axios from 'axios';
+import { NavLink } from 'react-router-dom';
 import { StyledSidebar, QuadrosContainer, StyledLogo, StyledList, IcnQuadro, SwitchTheme, ThemeSlider } from './SidebarStyle.jsx';
 import { icnQuadroRoxo, icnHide, icnLight, icnDark } from "./SidebarIcons.jsx";
 
-const Sidebar = ({ recolherSide, toggleSidebar, abrirModal }) => {
+const Sidebar = ({ recolherSide, toggleSidebar, abrirModal, updateHeaderTitle }) => {
   const [quadros, setQuadros] = React.useState([]);
+
+  const handleTitle = (title) => {
+    updateHeaderTitle(title)
+  }
 
   React.useEffect(() => {
     const fetchQuadros = async () => {
@@ -27,7 +32,9 @@ const Sidebar = ({ recolherSide, toggleSidebar, abrirModal }) => {
           <h3>Todos os quadros ({quadros.length})</h3>
           <StyledList>
             {quadros.map((quadro) => 
-              <li key={quadro.id} className='current'><IcnQuadro /> {quadro.name}</li>
+              <NavLink to={`/quadros/${quadro.name}`} key={quadro.id} onClick={() => handleTitle(quadro.name)}>
+                <li className='current'><IcnQuadro /> {quadro.name}</li>
+              </NavLink> 
             )}
           </StyledList>
           <p>
@@ -56,6 +63,7 @@ Sidebar.propTypes = {
   recolherSide: PropTypes.bool.isRequired,
   toggleSidebar: PropTypes.func.isRequired,
   abrirModal: PropTypes.func.isRequired,
+  updateHeaderTitle: PropTypes.func.isRequired
 };
 
 export default Sidebar;
