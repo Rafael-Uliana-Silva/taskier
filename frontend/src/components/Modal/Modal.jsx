@@ -26,19 +26,29 @@ const ModalContainer = styled.div`
   justify-content: center;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 10;
+  z-index: 1000;
 `;
 
 const ModalContent = styled.div`
+  max-height: 500px ;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   position: relative;
   background: #323033;
   padding: 20px;
   color: #fff;
-  border-radius: 20px;
+  border-radius: 20px 10px 10px 20px;
   font-family: Inter;
   animation: ${slideDown} 0.3s ease-out;
+  &&::-webkit-scrollbar {
+    background-color: #707070;
+    border-radius: 0px 20px 20px 0px;
+    width: 10px;
+  }
+  &&::-webkit-scrollbar-thumb {
+    background-color: #fff;
+  }
 `;
 
 const CloseButton = styled.button`
