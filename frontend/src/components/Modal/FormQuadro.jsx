@@ -14,7 +14,7 @@ const FormQuadro = () => {
     event.preventDefault();  
     setLoading(true);  
     try {
-      const response = await axios.post("http://localhost:5005/quadros", { nome: title });
+      const response = await axios.post("http://localhost:5005/quadros", { title });
       console.log("Resposta do servidor:", response.data);
       setTitle('');
     } catch (err) {
@@ -29,13 +29,14 @@ const FormQuadro = () => {
       <label htmlFor="title">Título da base de dados</label>
       <input
         type="text"
+        id='title'
         value={title}
         onChange={handleTitle}
         placeholder='Ex: Quadro 1'
         disabled={loading} 
       />
       <BtnCriar className='btn' type='submit' disabled={loading}>
-        <p>{loading ? 'Criando...' : 'Criar Base de Dados'}</p>
+        <p>{loading ? 'Criando...' : 'Criar Quadro'}</p>
       </BtnCriar>
     </ModalForm>
   );

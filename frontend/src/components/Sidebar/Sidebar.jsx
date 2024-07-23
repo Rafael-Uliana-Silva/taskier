@@ -31,11 +31,20 @@ const Sidebar = ({ recolherSide, toggleSidebar, abrirModal, updateHeaderTitle })
           <StyledLogo />
           <h3>Todos os quadros ({quadros.length})</h3>
           <StyledList>
-            {quadros.map((quadro) => 
-              <NavLink to={`/quadros/${quadro.name}`} key={quadro.id} onClick={() => handleTitle(quadro.name)}>
-                <li className='current'><IcnQuadro /> {quadro.name}</li>
-              </NavLink> 
-            )}
+            {quadros.map((quadro) => (
+              <NavLink
+                to={`/quadros/${quadro._id}`}
+                key={quadro._id}
+                onClick={() => handleTitle(quadro.title)}
+                className="nav-link"
+              >
+                {({ isActive }) => (
+                  <li className={isActive ? 'active' : ''}>
+                    <IcnQuadro /> {quadro.title}
+                  </li>
+                )}
+              </NavLink>
+            ))}
           </StyledList>
           <p>
             <img src={icnQuadroRoxo} alt="Quadro" />

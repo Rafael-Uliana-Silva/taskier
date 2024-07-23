@@ -1,39 +1,53 @@
-import React from 'react'
-import PropTypes from "prop-types"
-import axios from 'axios'
-import { HomeContainer, NovaColuna } from './HomeStyle.jsx'
-import { useParams } from 'react-router-dom'
+import React from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import PropTypes from 'prop-types';
+import { HomeContainer, NovaColuna } from './HomeStyle.jsx';
+import { ColunaContainer, ColunaContent } from './Coluna.jsx';
 
-const QuadroBase = ({ recolherSide, abrirModal }) => {
-  const { id } = useParams();
-  const [dadosQuadro, setDadosQuadro] = React.useState([]);
-  
+const QuadroBase = ({ recolherSide, abrirModal, setQuadroId }) => {
+  const { id } = useParams(); // Obtém o ID do quadro a partir da URL
+  const [dadosQuadro, setDadosQuadro] = React.useState({});
+  const [colunas, setColunas] = React.useState([]);
+
   React.useEffect(() => {
-
+    setQuadroId(id); // Define o ID do quadro
     const fetchDadosQuadro = async () => {
       try {
-        const response = await axios.get(`http://localhost:5005/quadros/${id}`)
-        setDadosQuadro(response.data)
+        const response = await axios.get(`http://localhost:5005/quadros/${id}`);
+        setDadosQuadro(response.data);
+        setColunas(response.data.columns || []);
       } catch (err) {
-        console.log(err)
+        console.log('Erro ao buscar dados do quadro:', err);
       }
     };
 
-    fetchDadosQuadro()
-  }, [id])
+    fetchDadosQuadro();
+  }, [id, setQuadroId]);
 
   return (
     <HomeContainer $recolherSide={recolherSide}>
-    <NovaColuna onClick={abrirModal}>
-      <h2>Teste: {dadosQuadro.name}</h2>  
-    </NovaColuna>  
-  </HomeContainer>
-  )
-}
+      <ColunaContainer>
+        {colunas.map(coluna => (
+          <ColunaContent key={coluna._id}>
+            <h2>
+              <span className='circle' style={{ backgroundColor: coluna.color }}></span>
+              {coluna.title}
+            </h2>
+          </ColunaContent>
+        ))}
+      </ColunaContainer>
+      <NovaColuna onClick={() => abrirModal('coluna')}>
+        <h2>Teste: {dadosQuadro.title}</h2>  
+      </NovaColuna>  
+    </HomeContainer>
+  );
+};
 
 QuadroBase.propTypes = {
   recolherSide: PropTypes.bool.isRequired,
   abrirModal: PropTypes.func.isRequired,
-}
+  setQuadroId: PropTypes.func.isRequired, // Adicione isso
+};
 
-export default QuadroBase
+export default QuadroBase;

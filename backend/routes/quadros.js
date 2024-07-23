@@ -1,57 +1,70 @@
 import express from 'express';
-import mongoose from 'mongoose';
-import Quadro from '../models/quadro.js'
+import Quadro from '../models/quadro.js';
 
 const router = express.Router();
 
-// Endpoint para criar uma nova coleção
+// Criar um novo quadro
 router.post('/', async (req, res) => {
-  const { nome } = req.body;
-
-  if (!nome) {
-    return res.status(400).json({ message: 'Nome da coleção é obrigatório' });
-  }
-
+  const quadro = new Quadro(req.body);
   try {
-    // Cria uma nova coleção
-    const db = mongoose.connection.db;
-    await db.createCollection(nome);
-
-    // Responde com uma mensagem de sucesso
-    res.status(201).json({ message: `Coleção '${nome}' criada com sucesso` });
+    const savedQuadro = await quadro.save();
+    res.status(201).json(savedQuadro);
   } catch (err) {
-    res.status(500).json({ message: `Houve um erro ao criar a coleção: ${err.message}` });
-    console.log(err);
+    res.status(400).json({ message: err.message });
   }
 });
 
-// Endpoint para listar todas as coleções
+// Obter todos os quadros
 router.get('/', async (req, res) => {
   try {
-    const db = mongoose.connection.db; // Acesso ao banco de dados
-    const collections = await db.listCollections().toArray();
-    res.json(collections.map(c => ({ id: c.name, name: c.name }))); // Envia a lista de coleções
-  } catch (error) {
-    res.status(500).json({ message: 'Erro ao listar as coleções.', error: error.message });
+    const quadros = await Quadro.find();
+    res.json(quadros);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 });
 
-router.get('/:id', async (req, res) => {
-  const { id } = req.params; 
+// Obter um quadro por ID
+router.get('/:id', getQuadro, (req, res) => {
+  res.json(res.quadro);
+});
 
+// Atualizar um quadro
+router.patch('/:id', getQuadro, async (req, res) => {
+  if (req.body.title != null) {
+    res.quadro.title = req.body.title;
+  }
+  // Atualizar colunas e tarefas conforme necessário
   try {
-    const db = mongoose.connection.db;
-    const collections = await db.listCollections({ name: id }).toArray(); 
-
-    if (collections.length === 0) {
-      res.status(404).json({ message: 'Coleção não encontrada.' });
-    } else {
-      res.json({ id: collections[0].name, name: collections[0].name });
-    }
-  } catch (error) {
-    res.status(500).json({ message: 'Erro ao buscar a coleção.', error: error.message });
+    const updatedQuadro = await res.quadro.save();
+    res.json(updatedQuadro);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
   }
 });
 
+// Deletar um quadro
+router.delete('/:id', getQuadro, async (req, res) => {
+  try {
+    await res.quadro.remove();
+    res.json({ message: 'Deleted quadro' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+async function getQuadro(req, res, next) {
+  let quadro;
+  try {
+    quadro = await Quadro.findById(req.params.id);
+    if (quadro == null) {
+      return res.status(404).json({ message: 'Cannot find quadro' });
+    }
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+  res.quadro = quadro;
+  next();
+}
 
 export default router;

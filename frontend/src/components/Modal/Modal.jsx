@@ -1,6 +1,6 @@
-import React from 'react'
-import styled, { keyframes } from 'styled-components'
-import PropTypes from "prop-types";
+import React from 'react';
+import styled, { keyframes } from 'styled-components';
+import PropTypes from 'prop-types';
 import FormQuadro from './FormQuadro';
 import FormTarefa from './FormTarefa';
 import FormColuna from './FormColuna';
@@ -14,7 +14,7 @@ const slideDown = keyframes`
     transform: translateY(0);
     opacity: 1;
   }
-`
+`;
 
 const ModalContainer = styled.div`
   position: fixed;
@@ -27,7 +27,7 @@ const ModalContainer = styled.div`
   align-items: center;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 10;
-`
+`;
 
 const ModalContent = styled.div`
   display: flex;
@@ -37,9 +37,9 @@ const ModalContent = styled.div`
   padding: 20px;
   color: #fff;
   border-radius: 20px;
-  font-family: inter;
+  font-family: Inter;
   animation: ${slideDown} 0.3s ease-out;
-`
+`;
 
 const CloseButton = styled.button`
   font-family: Inter;
@@ -57,34 +57,29 @@ const CloseButton = styled.button`
   }
 `;
 
-const Modal = ({ fecharModal, type }) => {
+const Modal = ({ fecharModal, type, quadroId }) => {
   const clickOutside = (event) => {
     if (event.target === event.currentTarget) {
-      fecharModal()
+      fecharModal();
     }
-  }
+  };
 
   return (
     <ModalContainer onClick={clickOutside}>
-      <ModalContent >
+      <ModalContent>
         <CloseButton onClick={fecharModal}>X</CloseButton>
-        {type === 'quadro' && (
-          <FormQuadro />
-        )}
-        {type === 'tarefa' && (
-          <FormTarefa />
-        )}
-        {type === 'coluna' && (
-          <FormColuna />
-        )}
+        {type === 'quadro' && (<FormQuadro />)}
+        {type === 'tarefa' && (<FormTarefa />)}
+        {type === 'coluna' && (<FormColuna quadroId={quadroId} />)}
       </ModalContent>
     </ModalContainer>
-  )
-}
+  );
+};
 
 Modal.propTypes = {
   fecharModal: PropTypes.func.isRequired,
-  type: PropTypes.func.isRequired,
+  type: PropTypes.string.isRequired,
+  quadroId: PropTypes.string, // Permite que seja opcional
 };
 
-export default Modal
+export default Modal;

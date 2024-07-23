@@ -1,10 +1,9 @@
 import mongoose from 'mongoose';
+import ColunaSchema from './coluna.js';
 
-const quadroSchema = new mongoose.Schema({
-  nome: {
-    type: String,
-    required: true,
-  },
+const QuadroSchema = new mongoose.Schema({
+  title: String,
+  columns: [ColunaSchema.schema], 
 });
 
-export default mongoose.model("Quadro", quadroSchema);
+export default mongoose.model('Quadro', QuadroSchema);

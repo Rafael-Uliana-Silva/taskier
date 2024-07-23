@@ -1,18 +1,10 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
+import TarefaSchema from './tarefa.js';
 
-const colunaSchema = new mongoose.Schema({
-  nome: {
-    type: String,
-    required: true,
-  },
-  cor: {
-    type: String,
-    required: true,
-  },
-  content: {
-    type: mongoose.Schema.Types.Mixed, 
-    default: {},
-  }
-})
+const ColunaSchema = new mongoose.Schema({
+  title: String,
+  color: String,
+  tasks: [TarefaSchema.schema], 
+});
 
-export default mongoose.model("Coluna", colunaSchema)
+export default mongoose.model('Coluna', ColunaSchema);

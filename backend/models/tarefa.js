@@ -1,20 +1,10 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-const tarefaSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true,
-  },
-  desc: {
-    type: String,
-    required: true,
-  },
-  subtarefas: [{
-    type: String,
-  }],
-  classficacao: {
-    type: String,
-  }
-})
+const TarefaSchema = new mongoose.Schema({
+  title: String,
+  description: String,
+  subtasks: [String],
+  classification: Number,
+});
 
-export default mongoose.model("Tarefa", tarefaSchema)
+export default mongoose.model('Tarefa', TarefaSchema);

@@ -1,57 +1,65 @@
-import React from 'react'
-import Home from './components/Home/Home.jsx'
-import QuadroBase from './components/Home/QuadroBase.jsx'
-import Header from './components/Header/Header.jsx'
-import Sidebar from './components/Sidebar/Sidebar.jsx'
-import Modal from './components/Modal/Modal.jsx'
-import { BrowserRouter, Routes, Route} from "react-router-dom"
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './components/Home/Home.jsx';
+import QuadroBase from './components/Home/QuadroBase.jsx';
+import Header from './components/Header/Header.jsx';
+import Sidebar from './components/Sidebar/Sidebar.jsx';
+import Modal from './components/Modal/Modal.jsx';
 
 const App = () => {
-  const [headerTitle, setHeaderTitle] = React.useState("Taskier")
-  const updateHeaderTitle = (novoTitle) => {
-    setHeaderTitle(novoTitle)
-  }
-
+  const [headerTitle, setHeaderTitle] = React.useState('Taskier');
   const [recolherSide, setRecolherSide] = React.useState(false);
-  const toggleSidebar = () => {
-    setRecolherSide(!recolherSide)
-  }
   const [modalAberto, setModalAberto] = React.useState(false);
-  const [modalType, setModalType] = React.useState(null)
-  const abrirModal = (type) => {
+  const [modalType, setModalType] = React.useState(null);
+  const [quadroId, setQuadroId] = React.useState(null);
+
+  const updateHeaderTitle = (novoTitle) => {
+    setHeaderTitle(novoTitle);
+  };
+
+  const toggleSidebar = () => {
+    setRecolherSide(!recolherSide);
+  };
+
+  const abrirModal = (type = null) => {
     setModalType(type);
     setModalAberto(true);
-  }
-  const fecharModal = () => setModalAberto(false)
+  };
+
+  const fecharModal = () => {
+    setModalAberto(false);
+  };
 
   return (
     <BrowserRouter>
       <div>
-        <Header recolherSide={recolherSide} abrirModal={() => abrirModal("tarefa")} titulo={headerTitle}/>
-        <Sidebar 
-        recolherSide={recolherSide} 
-        toggleSidebar={toggleSidebar} 
-        abrirModal={() => abrirModal("quadro")}
-        updateHeaderTitle={updateHeaderTitle}
+        <Header
+          recolherSide={recolherSide}
+          abrirModal={() => abrirModal('tarefa')}
+          titulo={headerTitle}
         />
-          <Routes>
-            <Route 
-              path='/'
-              element={<Home recolherSide={recolherSide} 
-              abrirModal={() => abrirModal("coluna")}/>}
-            >
-            </Route>
-            <Route 
-              path='/quadros/:id'
-              element={<QuadroBase recolherSide={recolherSide} 
-              abrirModal={() => abrirModal("coluna")}/>}
-            >
-            </Route>
-          </Routes>
-        {modalAberto && <Modal fecharModal={fecharModal} type={modalType}/>}
+        <Sidebar
+          recolherSide={recolherSide}
+          toggleSidebar={toggleSidebar}
+          abrirModal={() => abrirModal('quadro')}
+          updateHeaderTitle={updateHeaderTitle}
+        />
+        <Routes>
+          <Route
+            path='/'
+            element={<Home recolherSide={recolherSide} abrirModal={() => abrirModal('coluna')} />}
+          />
+          <Route
+            path='/quadros/:id'
+            element={<QuadroBase recolherSide={recolherSide} abrirModal={abrirModal} setQuadroId={setQuadroId} />}
+          />
+        </Routes>
+        {modalAberto && (
+          <Modal fecharModal={fecharModal} type={modalType} quadroId={quadroId} />
+        )}
       </div>
     </BrowserRouter>
-  )
-}
+  );
+};
 
 export default App;

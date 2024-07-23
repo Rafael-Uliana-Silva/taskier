@@ -58,18 +58,15 @@ const StyledList = styled.ul`
     font-weight: 700;
   }
 
-  .current {
-    overflow-x: visible;
-    width: 90%;
+  li.active {
+    width: 80%;
     background: linear-gradient(-135deg, rgba(116,53,168,1) 0%, rgba(166,67,136,1) 100%);
-    background-clip: padding-box;
     color: #fff;
-    padding: 10px 0px;
-    padding-left: 15px;
+    padding: 10px 0px 10px 15px;
     border-radius: 0px 20px 20px 0px;
   }
 
-  .current:hover {
+  .active:hover {
     box-shadow: 0 0 8px rgba(166,67,136,0.4), 0 0 16px rgba(166,67,136,0.3), 0 0 24px rgba(166,67,136,0.2);
   }
 `;
