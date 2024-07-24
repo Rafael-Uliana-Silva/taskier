@@ -79,7 +79,7 @@ const Modal = ({ fecharModal, type, quadroId }) => {
       <ModalContent>
         <CloseButton onClick={fecharModal}>X</CloseButton>
         {type === 'quadro' && (<FormQuadro />)}
-        {type === 'tarefa' && (<FormTarefa />)}
+        {type === 'tarefa' && (<FormTarefa quadroId={quadroId} />)}
         {type === 'coluna' && (<FormColuna quadroId={quadroId} />)}
       </ModalContent>
     </ModalContainer>
