@@ -23,7 +23,7 @@ router.post('/:quadroId/colunas/:colunaId/tarefas', async (req, res) => {
     const novaTarefa = {
       title,
       description,
-      subtasks,
+      subtasks: subtasks.map(subtask => ({ title: subtask, completed: false })),
       classification
     };
 
@@ -111,7 +111,11 @@ router.patch('/:quadroId/colunas/:colunaId/tarefas/:tarefaId', async (req, res) 
 
     if (title) tarefa.title = title;
     if (description) tarefa.description = description;
-    if (subtasks) tarefa.subtasks = subtasks;
+    if (subtasks) tarefa.subtasks = subtasks.map(subtask => 
+      typeof subtask === 'string' 
+        ? { title: subtask, completed: false } 
+        : subtask
+    );
     if (classification) tarefa.classification = classification;
 
     await quadro.save();

@@ -11,7 +11,7 @@ const QuadroBase = ({ recolherSide, abrirModal, setQuadroId }) => {
   const [colunas, setColunas] = React.useState([]);
 
   React.useEffect(() => {
-    setQuadroId(id); 
+    setQuadroId(id);
     const fetchDadosQuadro = async () => {
       try {
         const response = await axios.get(`http://localhost:5005/quadros/${id}`);
@@ -25,6 +25,10 @@ const QuadroBase = ({ recolherSide, abrirModal, setQuadroId }) => {
     fetchDadosQuadro();
   }, [id, setQuadroId]);
 
+  const handleTarefaClick = (tarefa) => {
+    abrirModal('task', tarefa);
+  };
+
   return (
     <HomeContainer $recolherSide={recolherSide}>
       <ColunaContainer>
@@ -36,7 +40,7 @@ const QuadroBase = ({ recolherSide, abrirModal, setQuadroId }) => {
             </h2>
             {Array.isArray(coluna.tasks) && coluna.tasks.length > 0 && (
               coluna.tasks.map((task, taskIndex) => (
-                <TarefaContent key={taskIndex}>
+                <TarefaContent key={taskIndex} onClick={() => handleTarefaClick(task)}>
                   <p>{task.title}</p>
                   <p><span>{task.subtasks ? task.subtasks.length : 0} subtasks</span></p>
                 </TarefaContent>

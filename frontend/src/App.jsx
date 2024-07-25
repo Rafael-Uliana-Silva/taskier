@@ -12,6 +12,7 @@ const App = () => {
   const [modalAberto, setModalAberto] = React.useState(false);
   const [modalType, setModalType] = React.useState(null);
   const [quadroId, setQuadroId] = React.useState(null);
+  const [tarefaSelecionada, setTarefaSelecionada] = React.useState(null);
 
   const updateHeaderTitle = (novoTitle) => {
     setHeaderTitle(novoTitle);
@@ -21,13 +22,15 @@ const App = () => {
     setRecolherSide(!recolherSide);
   };
 
-  const abrirModal = (type = null) => {
+  const abrirModal = (type = null, tarefa = null) => {
     setModalType(type);
+    setTarefaSelecionada(tarefa);
     setModalAberto(true);
   };
 
   const fecharModal = () => {
     setModalAberto(false);
+    setTarefaSelecionada(null);
   };
 
   return (
@@ -55,7 +58,7 @@ const App = () => {
           />
         </Routes>
         {modalAberto && (
-          <Modal fecharModal={fecharModal} type={modalType} quadroId={quadroId} />
+          <Modal fecharModal={fecharModal} type={modalType} quadroId={quadroId} tarefa={tarefaSelecionada} />
         )}
       </div>
     </BrowserRouter>

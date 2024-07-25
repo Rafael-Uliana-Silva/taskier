@@ -1,9 +1,14 @@
 import mongoose from 'mongoose';
 
+const SubtaskSchema = new mongoose.Schema({
+  title: String,
+  completed: Boolean,
+});
+
 const TarefaSchema = new mongoose.Schema({
   title: String,
   description: String,
-  subtasks: [String],
+  subtasks: [SubtaskSchema],
   classification: Number,
 });
 

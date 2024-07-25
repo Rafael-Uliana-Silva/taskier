@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import FormQuadro from './FormQuadro';
 import FormTarefa from './FormTarefa';
 import FormColuna from './FormColuna';
+import ViewTarefa from './ViewTarefa';
 
 const slideDown = keyframes`
   from {
@@ -67,7 +68,7 @@ const CloseButton = styled.button`
   }
 `;
 
-const Modal = ({ fecharModal, type, quadroId }) => {
+const Modal = ({ fecharModal, type, quadroId, tarefa}) => {
   const clickOutside = (event) => {
     if (event.target === event.currentTarget) {
       fecharModal();
@@ -81,6 +82,7 @@ const Modal = ({ fecharModal, type, quadroId }) => {
         {type === 'quadro' && (<FormQuadro />)}
         {type === 'tarefa' && (<FormTarefa quadroId={quadroId} />)}
         {type === 'coluna' && (<FormColuna quadroId={quadroId} />)}
+        {type === 'task' && tarefa && (<ViewTarefa tarefa={tarefa} />)}
       </ModalContent>
     </ModalContainer>
   );
@@ -89,7 +91,8 @@ const Modal = ({ fecharModal, type, quadroId }) => {
 Modal.propTypes = {
   fecharModal: PropTypes.func.isRequired,
   type: PropTypes.string.isRequired,
-  quadroId: PropTypes.string, // Permite que seja opcional
+  quadroId: PropTypes.string, 
+  tarefa: PropTypes.object,
 };
 
 export default Modal;

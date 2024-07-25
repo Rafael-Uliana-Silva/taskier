@@ -6,6 +6,13 @@ const ModalForm = styled.form`
   input {
     width: 540px;
   }
+  .desc {
+    color: #707070;
+    margin: 30px 0 15px 0;
+  }
+  .desc span {
+    font-weight: 700;
+  }
 `
 
 const BtnCriar = styled.button`
@@ -50,4 +57,30 @@ const SubTask = styled.span`
     }
 `
 
-export {ModalForm, BtnCriar, BtnSubTask, InputColor, SubTask, InputColunas}
+const CheckBox = styled.div`
+  display: flex;
+  width: 540px;
+  justify-content: flex-start;
+  flex-direction: row;
+  border-radius: 10px;
+  background: #292829;
+  padding: 10px;
+  margin: 10px 0px;
+  input[type="checkbox"] {
+    width: 20px;
+    padding: 0px;
+    margin-right: 10px;
+  }
+  label {
+    max-width : 95%;
+    white-space: normal;
+    word-wrap: break-word; 
+    word-break: break-word; 
+  }
+  input[type="checkbox"]:checked + label {
+   color: #707070;
+   text-decoration: line-through;
+  }
+`
+
+export {ModalForm, BtnCriar, BtnSubTask, InputColor, SubTask, InputColunas, CheckBox}

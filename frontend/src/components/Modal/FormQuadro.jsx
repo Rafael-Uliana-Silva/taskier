@@ -18,7 +18,7 @@ const FormQuadro = () => {
       console.log("Resposta do servidor:", response.data);
       setTitle('');
     } catch (err) {
-      console.error("Erro ao criar a base de dados:", err.response?.data?.message || err.message);
+      console.error("Erro ao criar quadro:", err.response?.data?.message || err.message);
     } finally {
       setLoading(false);
     }
@@ -26,7 +26,7 @@ const FormQuadro = () => {
 
   return (
     <ModalForm onSubmit={handleSubmit}>
-      <label htmlFor="title">Título da base de dados</label>
+      <label htmlFor="title">Título do quadro</label>
       <input
         type="text"
         id='title'
