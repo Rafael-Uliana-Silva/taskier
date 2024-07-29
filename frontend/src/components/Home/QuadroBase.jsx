@@ -3,11 +3,10 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { HomeContainer, NovaColuna } from './HomeStyle.jsx';
-import { ColunaContainer, ColunaContent, TarefaContent } from './Coluna.jsx';
+import { ColunaContainer, ColunaContent, TarefaContent, IcnGear } from './ColunaStyle.jsx';
 
 const QuadroBase = ({ recolherSide, abrirModal, setQuadroId }) => {
   const { id } = useParams();
-  const [dadosQuadro, setDadosQuadro] = React.useState({});
   const [colunas, setColunas] = React.useState([]);
 
   React.useEffect(() => {
@@ -15,7 +14,6 @@ const QuadroBase = ({ recolherSide, abrirModal, setQuadroId }) => {
     const fetchDadosQuadro = async () => {
       try {
         const response = await axios.get(`http://localhost:5005/quadros/${id}`);
-        setDadosQuadro(response.data);
         setColunas(response.data.columns || []);
       } catch (err) {
         console.log('Erro ao buscar dados do quadro:', err);
@@ -25,8 +23,8 @@ const QuadroBase = ({ recolherSide, abrirModal, setQuadroId }) => {
     fetchDadosQuadro();
   }, [id, setQuadroId]);
 
-  const handleTarefaClick = (tarefa) => {
-    abrirModal('task', tarefa);
+  const handleTarefaClick = (colunaId, tarefa) => {
+    abrirModal('task', tarefa, colunaId);
   };
 
   return (
@@ -34,15 +32,18 @@ const QuadroBase = ({ recolherSide, abrirModal, setQuadroId }) => {
       <ColunaContainer>
         {colunas.map(coluna => (
           <ColunaContent key={coluna._id}>
-            <h2>
-              <span className='circle' style={{ backgroundColor: coluna.color }}></span>
-              {coluna.title}
-            </h2>
+            <div className='titleFlex'>
+              <h2>
+                <span className='circle' style={{ backgroundColor: coluna.color }}></span>
+                {coluna.title}
+              </h2>
+              <IcnGear />
+            </div>
             {Array.isArray(coluna.tasks) && coluna.tasks.length > 0 && (
               coluna.tasks.map((task, taskIndex) => (
-                <TarefaContent key={taskIndex} onClick={() => handleTarefaClick(task)}>
+                <TarefaContent key={taskIndex} onClick={() => handleTarefaClick(coluna._id, task)}>
                   <p>{task.title}</p>
-                  <p><span>{task.subtasks ? task.subtasks.length : 0} subtasks</span></p>
+                  <p><span>{task.subtasks.filter(subtask => subtask.completed).length} de {task.subtasks.length} subtarefas</span></p>
                 </TarefaContent>
               ))
             )}
@@ -50,8 +51,8 @@ const QuadroBase = ({ recolherSide, abrirModal, setQuadroId }) => {
         ))}
       </ColunaContainer>
       <NovaColuna onClick={() => abrirModal('coluna')}>
-        <h2>Teste: {dadosQuadro.title}</h2>  
-      </NovaColuna>  
+        <h2>+ Criar Coluna</h2>
+      </NovaColuna>
     </HomeContainer>
   );
 };

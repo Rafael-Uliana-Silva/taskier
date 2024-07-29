@@ -46,8 +46,8 @@ router.patch('/:id', getQuadro, async (req, res) => {
 // Deletar um quadro
 router.delete('/:id', getQuadro, async (req, res) => {
   try {
-    await res.quadro.remove();
-    res.json({ message: 'Deleted quadro' });
+    await Quadro.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Quadro deletado com sucesso' });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

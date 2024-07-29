@@ -2,17 +2,26 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { ModalForm, InputColunas } from './FormStyle';
 import { CheckBox } from './FormStyle';
+import axios from 'axios';
 
-const ViewTarefa = ({ tarefa, onUpdateTarefa }) => {
+const ViewTarefa = ({ tarefa, onUpdateTarefa, quadroId, colunaId }) => {
   const [subtasks, setSubtasks] = useState(tarefa.subtasks);
 
-  const handleCheckboxChange = (index) => {
+  const handleCheckboxChange = async (index) => {
     const updatedSubtasks = [...subtasks];
     updatedSubtasks[index].completed = !updatedSubtasks[index].completed;
     setSubtasks(updatedSubtasks);
 
     if (onUpdateTarefa) {
       onUpdateTarefa({ ...tarefa, subtasks: updatedSubtasks });
+    }
+
+    try {
+      await axios.patch(`http://localhost:5005/quadros/${quadroId}/colunas/${colunaId}/tarefas/${tarefa._id}/subtasks/${updatedSubtasks[index]._id}`, {
+        completed: updatedSubtasks[index].completed
+      });
+    } catch (error) {
+      console.error('Erro ao atualizar a subtarefa', error);
     }
   };
 
@@ -43,15 +52,19 @@ const ViewTarefa = ({ tarefa, onUpdateTarefa }) => {
 };
 
 ViewTarefa.propTypes = {
+  quadroId: PropTypes.string.isRequired,
+  colunaId: PropTypes.string.isRequired,
   tarefa: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     description: PropTypes.string,
     subtasks: PropTypes.arrayOf(PropTypes.shape({
+      _id: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
       completed: PropTypes.bool.isRequired,
     })).isRequired,
   }).isRequired,
-  onUpdateTarefa: PropTypes.func, // Função opcional para lidar com atualizações
+  onUpdateTarefa: PropTypes.func,
 };
 
 export default ViewTarefa;

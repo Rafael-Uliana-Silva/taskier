@@ -5,6 +5,9 @@ import FormQuadro from './FormQuadro';
 import FormTarefa from './FormTarefa';
 import FormColuna from './FormColuna';
 import ViewTarefa from './ViewTarefa';
+import FormQuadroPatch from './FormQuadroPatch';
+import FormColunaPatch from './FormColunaPatch';
+import FormTarefaPatch from './FormTarefaPatch';
 
 const slideDown = keyframes`
   from {
@@ -68,7 +71,7 @@ const CloseButton = styled.button`
   }
 `;
 
-const Modal = ({ fecharModal, type, quadroId, tarefa}) => {
+const Modal = ({ fecharModal, type, quadroId, colunaId, tarefa}) => {
   const clickOutside = (event) => {
     if (event.target === event.currentTarget) {
       fecharModal();
@@ -82,7 +85,10 @@ const Modal = ({ fecharModal, type, quadroId, tarefa}) => {
         {type === 'quadro' && (<FormQuadro />)}
         {type === 'tarefa' && (<FormTarefa quadroId={quadroId} />)}
         {type === 'coluna' && (<FormColuna quadroId={quadroId} />)}
-        {type === 'task' && tarefa && (<ViewTarefa tarefa={tarefa} />)}
+        {type === 'task' && tarefa && (<ViewTarefa tarefa={tarefa} quadroId={quadroId} colunaId={colunaId}/>)}
+        {type === 'quadroPatch' && (<FormQuadroPatch quadroId={quadroId}  />)}
+        {type === 'tarefaPatch' && (<FormTarefaPatch quadroId={quadroId} />)}
+        {type === 'colunaPatch' && (<FormColunaPatch quadroId={quadroId} />)}
       </ModalContent>
     </ModalContainer>
   );
@@ -92,6 +98,7 @@ Modal.propTypes = {
   fecharModal: PropTypes.func.isRequired,
   type: PropTypes.string.isRequired,
   quadroId: PropTypes.string, 
+  colunaId: PropTypes.string, 
   tarefa: PropTypes.object,
 };
 

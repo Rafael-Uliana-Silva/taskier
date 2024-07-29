@@ -7,8 +7,8 @@ const Header = ({ recolherSide, abrirModal, titulo }) => {
     <MainHeader $recolherSide={recolherSide}>
       <h1>{titulo}</h1>
       <ButtonContainer >
-        <button className='btn' onClick={abrirModal}>+ Adicionar Tarefa</button>
-        <IconOption />
+        <button className='btn' onClick={() => abrirModal('tarefa')}>+ Adicionar Tarefa</button>
+        <IconOption onClick={() => abrirModal('quadroPatch')}/>
       </ButtonContainer>
     </MainHeader>
   );

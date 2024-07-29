@@ -19,6 +19,15 @@ const BtnCriar = styled.button`
 
 `
 
+const BtnDeletar = styled.button`
+  margin-top: 30px;
+  background: rgb(168,53,53);
+  background: linear-gradient(-135deg, rgba(168,53,53,1) 0%, rgba(166,67,67,1) 100%);
+  &&:hover {
+    box-shadow: 0 0 8px rgba(166,67,67,0.4), 0 0 16px rgba(166,67,67,0.3), 0 0 24px rgba(166,67,67,0.2);
+  }
+`
+
 const BtnSubTask = styled.button`
   margin-top: 15px;
   margin-bottom: 45px;
@@ -83,4 +92,4 @@ const CheckBox = styled.div`
   }
 `
 
-export {ModalForm, BtnCriar, BtnSubTask, InputColor, SubTask, InputColunas, CheckBox}
+export {ModalForm, BtnCriar, BtnDeletar, BtnSubTask, InputColor, SubTask, InputColunas, CheckBox}

@@ -5,6 +5,7 @@ import QuadroBase from './components/Home/QuadroBase.jsx';
 import Header from './components/Header/Header.jsx';
 import Sidebar from './components/Sidebar/Sidebar.jsx';
 import Modal from './components/Modal/Modal.jsx';
+import NotFound from './components/Home/NotFound.jsx';
 
 const App = () => {
   const [headerTitle, setHeaderTitle] = React.useState('Taskier');
@@ -12,6 +13,7 @@ const App = () => {
   const [modalAberto, setModalAberto] = React.useState(false);
   const [modalType, setModalType] = React.useState(null);
   const [quadroId, setQuadroId] = React.useState(null);
+  const [colunaId, setColunaId] = React.useState(null);
   const [tarefaSelecionada, setTarefaSelecionada] = React.useState(null);
 
   const updateHeaderTitle = (novoTitle) => {
@@ -22,9 +24,10 @@ const App = () => {
     setRecolherSide(!recolherSide);
   };
 
-  const abrirModal = (type = null, tarefa = null) => {
+  const abrirModal = (type = null, tarefa = null, colunaId = null) => {
     setModalType(type);
     setTarefaSelecionada(tarefa);
+    setColunaId(colunaId); 
     setModalAberto(true);
   };
 
@@ -38,7 +41,7 @@ const App = () => {
       <div>
         <Header
           recolherSide={recolherSide}
-          abrirModal={() => abrirModal('tarefa')}
+          abrirModal={abrirModal}
           titulo={headerTitle}
         />
         <Sidebar
@@ -48,6 +51,10 @@ const App = () => {
           updateHeaderTitle={updateHeaderTitle}
         />
         <Routes>
+          <Route 
+            path='*'
+            element={<NotFound />}
+          />
           <Route
             path='/'
             element={<Home recolherSide={recolherSide} abrirModal={() => abrirModal('coluna')} />}
@@ -58,7 +65,13 @@ const App = () => {
           />
         </Routes>
         {modalAberto && (
-          <Modal fecharModal={fecharModal} type={modalType} quadroId={quadroId} tarefa={tarefaSelecionada} />
+          <Modal 
+            fecharModal={fecharModal} 
+            type={modalType} 
+            quadroId={quadroId} 
+            tarefa={tarefaSelecionada} 
+            colunaId={colunaId}
+          />
         )}
       </div>
     </BrowserRouter>

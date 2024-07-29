@@ -1,12 +1,22 @@
-import React from 'react'
 import styled from 'styled-components'
-
+import IcnEngrenagem from '../../assets/icnGear.svg?react'
 
 const ColunaContainer = styled.div`
   display: flex;
 `
 
+const IcnGear = styled(IcnEngrenagem)`
+  transition: 0.3s;
+  cursor: pointer;
+  margin-left: 15px;
+  padding: 3px;
+  &:hover {
+    filter: drop-shadow(0 0 10px #707070);
+  }
+`
+
 const ColunaContent = styled.div`
+  margin-right: 50px;
   width: 300px;
   display: flex;
   flex-direction: column;
@@ -24,31 +34,28 @@ const ColunaContent = styled.div`
     border-radius: 50%;
     border: 1px solid #000;
   }
+  .titleFlex {
+    display: flex;
+    justify-content: space-between;
+  }
 `
 
 const TarefaContent = styled.div`
+  width: ${'calc(100% - 20px)'};
   cursor: pointer;
   background: #323033;
   padding: 10px;
   border-radius: 10px;
   margin-bottom: 20px;
   margin-right: 30px;
+  transition: 0.3s;
   span {
     color: #707070;
     font-size: 12px;
   }
+  &&:hover{
+    scale: 102%;
+  }
 `
 
-const Coluna = () => {
-  return (
-     <ColunaContent>
-       <h2><span className='circle'></span>Tag 1 (4)</h2>
-       <TarefaContent>
-         <p>Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet</p>
-         <p><span>0 de 3 subtarefas</span></p>
-       </TarefaContent>
-     </ColunaContent>
-  )
-}
-
-export {ColunaContainer, ColunaContent, TarefaContent, Coluna};
+export {ColunaContainer, ColunaContent, TarefaContent, IcnGear};
