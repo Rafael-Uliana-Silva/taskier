@@ -27,6 +27,10 @@ const QuadroBase = ({ recolherSide, abrirModal, setQuadroId }) => {
     abrirModal('task', tarefa, colunaId);
   };
 
+  const handleEditColunaClick = (colunaId) => {
+    abrirModal('colunaPatch', null, colunaId);
+  };
+
   return (
     <HomeContainer $recolherSide={recolherSide}>
       <ColunaContainer>
@@ -37,7 +41,7 @@ const QuadroBase = ({ recolherSide, abrirModal, setQuadroId }) => {
                 <span className='circle' style={{ backgroundColor: coluna.color }}></span>
                 {coluna.title}
               </h2>
-              <IcnGear />
+              <IcnGear onClick={() => handleEditColunaClick(coluna._id)} />
             </div>
             {Array.isArray(coluna.tasks) && coluna.tasks.length > 0 && (
               coluna.tasks.map((task, taskIndex) => (

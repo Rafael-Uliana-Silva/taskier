@@ -106,7 +106,7 @@ router.delete('/:id/colunas/:colunaId', async (req, res) => {
       return res.status(404).send('Coluna não encontrada');
     }
 
-    coluna.remove();
+    quadro.columns.pull(colunaId);
     await quadro.save();
 
     res.send('Coluna deletada com sucesso');

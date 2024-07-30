@@ -33,7 +33,7 @@ const ViewTarefa = ({ tarefa, onUpdateTarefa, quadroId, colunaId }) => {
     <ModalForm>
       <h1>{tarefa.title}</h1>
       <p className='desc'><span>Descrição:</span> {tarefa.description}</p>
-      <label htmlFor="subtasks">Subtasks ({subtasks.filter(subtask => subtask.completed).length} de {subtasks.length})</label>
+      <label htmlFor="subtasks">Subtarefas ({subtasks.filter(subtask => subtask.completed).length} de {subtasks.length})</label>
       {subtasks.map((subtask, index) => (
         <CheckBox key={index}>
           <input 

@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import axios from 'axios';
 import { ModalForm, BtnCriar, BtnDeletar } from './FormStyle';
 import PropTypes from 'prop-types';
 
 const FormQuadroPatch = ({ quadroId }) => {
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = React.useState('');
 
-  useEffect(() => {
+  React.useEffect(() => {
     const fetchQuadroData = async () => {
       try {
         const response = await axios.get(`http://localhost:5005/quadros/${quadroId}`);
