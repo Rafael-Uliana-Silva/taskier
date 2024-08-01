@@ -8,17 +8,12 @@ import Modal from './components/Modal/Modal.jsx';
 import NotFound from './components/Home/NotFound.jsx';
 
 const App = () => {
-  const [headerTitle, setHeaderTitle] = React.useState('Taskier');
   const [recolherSide, setRecolherSide] = React.useState(false);
   const [modalAberto, setModalAberto] = React.useState(false);
   const [modalType, setModalType] = React.useState(null);
   const [quadroId, setQuadroId] = React.useState(null);
   const [colunaId, setColunaId] = React.useState(null);
   const [tarefaSelecionada, setTarefaSelecionada] = React.useState(null);
-
-  const updateHeaderTitle = (novoTitle) => {
-    setHeaderTitle(novoTitle);
-  };
 
   const toggleSidebar = () => {
     setRecolherSide(!recolherSide);
@@ -27,7 +22,7 @@ const App = () => {
   const abrirModal = (type = null, tarefa = null, colunaId = null) => {
     setModalType(type);
     setTarefaSelecionada(tarefa);
-    setColunaId(colunaId); 
+    setColunaId(colunaId);
     setModalAberto(true);
   };
 
@@ -42,22 +37,21 @@ const App = () => {
         <Header
           recolherSide={recolherSide}
           abrirModal={abrirModal}
-          titulo={headerTitle}
+          quadroId={quadroId}
         />
         <Sidebar
           recolherSide={recolherSide}
           toggleSidebar={toggleSidebar}
           abrirModal={() => abrirModal('quadro')}
-          updateHeaderTitle={updateHeaderTitle}
         />
         <Routes>
-          <Route 
+          <Route
             path='*'
             element={<NotFound />}
           />
           <Route
             path='/'
-            element={<Home recolherSide={recolherSide} abrirModal={() => abrirModal('coluna')} />}
+            element={<Home recolherSide={recolherSide} abrirModal={abrirModal} />}
           />
           <Route
             path='/quadros/:id'
@@ -65,12 +59,13 @@ const App = () => {
           />
         </Routes>
         {modalAberto && (
-          <Modal 
-            fecharModal={fecharModal} 
-            type={modalType} 
-            quadroId={quadroId} 
-            tarefa={tarefaSelecionada} 
+          <Modal
+            abrirModal={abrirModal}
+            fecharModal={fecharModal}
+            type={modalType}
+            quadroId={quadroId}
             colunaId={colunaId}
+            tarefa={tarefaSelecionada}
           />
         )}
       </div>

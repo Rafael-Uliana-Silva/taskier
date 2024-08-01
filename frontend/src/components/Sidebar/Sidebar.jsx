@@ -5,12 +5,8 @@ import { NavLink } from 'react-router-dom';
 import { StyledSidebar, QuadrosContainer, StyledLogo, StyledList, IcnQuadro, SwitchTheme, ThemeSlider } from './SidebarStyle.jsx';
 import { icnQuadroRoxo, icnHide, icnLight, icnDark } from "./SidebarIcons.jsx";
 
-const Sidebar = ({ recolherSide, toggleSidebar, abrirModal, updateHeaderTitle }) => {
+const Sidebar = ({ recolherSide, toggleSidebar, abrirModal }) => {
   const [quadros, setQuadros] = React.useState([]);
-
-  const handleTitle = (title) => {
-    updateHeaderTitle(title)
-  }
 
   React.useEffect(() => {
     const fetchQuadros = async () => {
@@ -35,7 +31,6 @@ const Sidebar = ({ recolherSide, toggleSidebar, abrirModal, updateHeaderTitle })
               <NavLink
                 to={`/quadros/${quadro._id}`}
                 key={quadro._id}
-                onClick={() => handleTitle(quadro.title)}
                 className="nav-link"
               >
                 {({ isActive }) => (
@@ -72,7 +67,6 @@ Sidebar.propTypes = {
   recolherSide: PropTypes.bool.isRequired,
   toggleSidebar: PropTypes.func.isRequired,
   abrirModal: PropTypes.func.isRequired,
-  updateHeaderTitle: PropTypes.func.isRequired
 };
 
 export default Sidebar;

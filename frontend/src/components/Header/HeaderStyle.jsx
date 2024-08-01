@@ -14,6 +14,9 @@ const MainHeader = styled.header`
   padding: 15px 30px;
   border-bottom: 1px solid #707070;
   z-index: 1000;
+  h1 {
+    max-width: 500px;
+  }
 `;
 
 const IconOption = styled(IcnOpt)`
@@ -29,6 +32,10 @@ const IconOption = styled(IcnOpt)`
 const ButtonContainer = styled.div`
   display: flex;
   align-items: center;
+  .btn-disabled {
+  opacity: 0.5; 
+  cursor: not-allowed; 
+}
 `;
 
 export { MainHeader, ButtonContainer, IconOption };

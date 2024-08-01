@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { ModalForm, InputColunas, CheckBox} from './FormStyle';
+import { ModalForm, InputColunas, CheckBox, BtnCriar } from './FormStyle';
 
-const ViewTarefa = ({ tarefa, onUpdateTarefa, quadroId, colunaId }) => {
+const ViewTarefa = ({ tarefa, onUpdateTarefa, quadroId, colunaId, abrirModal }) => {
   const [subtasks, setSubtasks] = React.useState(tarefa.subtasks);
   const [colunas, setColunas] = React.useState([]);
   const [selectedColunaId, setSelectedColunaId] = React.useState('');
@@ -85,6 +85,9 @@ const ViewTarefa = ({ tarefa, onUpdateTarefa, quadroId, colunaId }) => {
           <option key={coluna._id} value={coluna._id}>{coluna.title}</option>
         ))}
       </InputColunas>
+      <BtnCriar className='btn' onClick={() => abrirModal('tarefaPatch', tarefa, colunaId)}>
+        <p>Atualizar Tarefa</p>
+      </BtnCriar>
     </ModalForm>
   );
 };
@@ -103,6 +106,7 @@ ViewTarefa.propTypes = {
     })).isRequired,
   }).isRequired,
   onUpdateTarefa: PropTypes.func,
+  abrirModal: PropTypes.func.isRequired,
 };
 
 export default ViewTarefa;

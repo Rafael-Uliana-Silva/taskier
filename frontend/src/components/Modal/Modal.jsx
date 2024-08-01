@@ -10,28 +10,24 @@ import FormColunaPatch from './FormColunaPatch';
 import FormTarefaPatch from './FormTarefaPatch';
 
 
-const Modal = ({ fecharModal, type, quadroId, colunaId, tarefa}) => {
+const Modal = ({ abrirModal, fecharModal, type, quadroId, colunaId, tarefa}) => {
   const clickOutside = (event) => {
     if (event.target === event.currentTarget) {
       fecharModal();
     }
   };
 
-  const refreshPage = () => {
-    window.location.reload();
-  };
-
   return (
     <ModalContainer onClick={clickOutside}>
       <ModalContent>
         <CloseButton onClick={fecharModal}>X</CloseButton>
-        {type === 'quadro' && (<FormQuadro refreshPage={refreshPage} />)}
-        {type === 'tarefa' && (<FormTarefa quadroId={quadroId} refreshPage={refreshPage} />)}
-        {type === 'coluna' && (<FormColuna quadroId={quadroId} refreshPage={refreshPage} />)}
-        {type === 'task' && tarefa && (<ViewTarefa tarefa={tarefa} quadroId={quadroId} colunaId={colunaId} refreshPage={refreshPage} />)}
-        {type === 'quadroPatch' && (<FormQuadroPatch quadroId={quadroId} refreshPage={refreshPage} />)}
-        {type === 'tarefaPatch' && (<FormTarefaPatch quadroId={quadroId} refreshPage={refreshPage} />)}
-        {type === 'colunaPatch' && (<FormColunaPatch quadroId={quadroId} colunaId={colunaId} refreshPage={refreshPage} />)}
+        {type === 'quadro' && (<FormQuadro />)}
+        {type === 'coluna' && (<FormColuna quadroId={quadroId} />)}
+        {type === 'tarefa' && (<FormTarefa quadroId={quadroId} />)}
+        {type === 'task' && tarefa && (<ViewTarefa tarefa={tarefa} quadroId={quadroId} colunaId={colunaId} abrirModal={abrirModal}/>)}
+        {type === 'quadroPatch' && (<FormQuadroPatch quadroId={quadroId} />)}
+        {type === 'colunaPatch' && (<FormColunaPatch quadroId={quadroId} colunaId={colunaId} />)}
+        {type === 'tarefaPatch' && (<FormTarefaPatch quadroId={quadroId} colunaId={colunaId} tarefa={tarefa}/>)}
       </ModalContent>
     </ModalContainer>
   );
@@ -39,6 +35,7 @@ const Modal = ({ fecharModal, type, quadroId, colunaId, tarefa}) => {
 
 Modal.propTypes = {
   refreshPage: PropTypes.func,
+  abrirModal: PropTypes.func.isRequired,
   fecharModal: PropTypes.func.isRequired,
   type: PropTypes.string.isRequired,
   quadroId: PropTypes.string, 

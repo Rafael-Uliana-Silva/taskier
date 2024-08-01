@@ -40,6 +40,7 @@ const StyledList = styled.ul`
   margin-bottom: 30px;
   max-height: 300px;
   overflow-y: auto;
+  overflow-x: hidden;
   li, p {
     color: #707070;
     margin: 30px 0;
@@ -62,7 +63,7 @@ const StyledList = styled.ul`
     width: 80%;
     background: linear-gradient(-135deg, rgba(116,53,168,1) 0%, rgba(166,67,136,1) 100%);
     color: #fff;
-    padding: 10px 0px 10px 15px;
+    padding: 10px 0px 10px 5px;
     border-radius: 0px 20px 20px 0px;
   }
 
@@ -76,7 +77,8 @@ const StyledLogo = styled(Logo)`
 `;
 
 const IcnQuadro = styled(icnQuadro)`
-  margin-right: 10px;
+  width: 40px;
+  margin-right: 5px;
   path {
     fill: currentColor;
   }

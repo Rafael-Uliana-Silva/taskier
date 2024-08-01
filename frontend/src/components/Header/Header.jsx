@@ -1,21 +1,43 @@
-import React from 'react'
-import PropTypes from "prop-types"
-import { MainHeader, ButtonContainer, IconOption } from "./HeaderStyle.jsx"
+import React from 'react';
+import PropTypes from 'prop-types';
+import axios from 'axios';
+import { MainHeader, ButtonContainer, IconOption } from './HeaderStyle.jsx';
 
-const Header = ({ recolherSide, abrirModal, titulo }) => {
+const Header = ({ recolherSide, abrirModal, quadroId }) => {
+  const [quadroTitle, setQuadroTitle] = React.useState('');
+  const [hasColumns, setHasColumns] = React.useState(false); 
+
+  React.useEffect(() => {
+    const fetchQuadros = async () => {
+      if (!quadroId) return; 
+
+      try {
+        const response = await axios.get(`http://localhost:5005/quadros/${quadroId}`);
+        setQuadroTitle(response.data.title);
+        setHasColumns(response.data.columns.length > 0); 
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchQuadros();
+  }, [quadroId]);
+
   return (
     <MainHeader $recolherSide={recolherSide}>
-      <h1>{titulo}</h1>
-      <ButtonContainer >
-        <button className='btn' onClick={() => abrirModal('tarefa')}>+ Adicionar Tarefa</button>
-        <IconOption onClick={() => abrirModal('quadroPatch')}/>
+      <h1>{quadroTitle}</h1>
+      <ButtonContainer>
+        <button className={`btn ${!hasColumns ? 'btn-disabled' : ''}`} onClick={() => abrirModal('tarefa')} disabled={!hasColumns}>
+          + Adicionar Tarefa
+        </button>
+        <IconOption onClick={() => abrirModal('quadroPatch')} />
       </ButtonContainer>
     </MainHeader>
   );
 };
 
 Header.propTypes = {
-  titulo: PropTypes.string.isRequired,
+  quadroId: PropTypes.string,
   recolherSide: PropTypes.bool.isRequired,
   abrirModal: PropTypes.func.isRequired,
 };

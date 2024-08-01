@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { ModalForm, BtnCriar, BtnSubTask, SubTask, InputColunas } from './FormStyle';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
 const FormTarefa = ({ quadroId }) => {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [subtasks, setSubtasks] = useState([]);
-  const [colunas, setColunas] = useState([]);
-  const [selectedColunaId, setSelectedColunaId] = useState('');
+  const [title, setTitle] = React.useState('');
+  const [description, setDescription] = React.useState('');
+  const [subtasks, setSubtasks] = React.useState([]);
+  const [colunas, setColunas] = React.useState([]);
+  const [selectedColunaId, setSelectedColunaId] = React.useState('');
 
   const handleSubtaskAdd = (event) => {
     event.preventDefault(); 
@@ -45,7 +45,7 @@ const FormTarefa = ({ quadroId }) => {
     }
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     const fetchColunas = async () => {
       try {
         const response = await axios.get(`http://localhost:5005/quadros/${quadroId}`);

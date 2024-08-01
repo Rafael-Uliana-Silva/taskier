@@ -6,8 +6,8 @@ const Home = ({ recolherSide, abrirModal }) => {
 
   return (
     <HomeContainer $recolherSide={recolherSide}>
-      <NovaColuna onClick={abrirModal}>
-        <h2>+ Nova Coluna</h2>  
+      <NovaColuna onClick={() => abrirModal('quadro')}>
+        <h2>Comece criando um quadro</h2>  
       </NovaColuna>  
     </HomeContainer>
   )

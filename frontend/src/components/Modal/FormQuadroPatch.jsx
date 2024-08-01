@@ -1,10 +1,12 @@
 import React from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import { ModalForm, BtnCriar, BtnDeletar } from './FormStyle';
 import PropTypes from 'prop-types';
 
 const FormQuadroPatch = ({ quadroId }) => {
   const [title, setTitle] = React.useState('');
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     const fetchQuadroData = async () => {
@@ -26,9 +28,8 @@ const FormQuadroPatch = ({ quadroId }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.patch(`http://localhost:5005/quadros/${quadroId}`, {
-        title
-      });
+      await axios.patch(`http://localhost:5005/quadros/${quadroId}`, { title });
+      window.location.reload();
     } catch (error) {
       console.error('Erro ao atualizar o quadro:', error);
     }
@@ -37,6 +38,8 @@ const FormQuadroPatch = ({ quadroId }) => {
   const handleDelete = async () => {
     try {
       await axios.delete(`http://localhost:5005/quadros/${quadroId}`);
+      navigate('/');
+      window.location.reload();
     } catch (error) {
       console.error('Erro ao excluir o quadro:', error);
     }
