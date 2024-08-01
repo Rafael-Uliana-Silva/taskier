@@ -1,11 +1,24 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { ModalForm, InputColunas } from './FormStyle';
-import { CheckBox } from './FormStyle';
 import axios from 'axios';
+import { ModalForm, InputColunas, CheckBox} from './FormStyle';
 
 const ViewTarefa = ({ tarefa, onUpdateTarefa, quadroId, colunaId }) => {
-  const [subtasks, setSubtasks] = useState(tarefa.subtasks);
+  const [subtasks, setSubtasks] = React.useState(tarefa.subtasks);
+  const [colunas, setColunas] = React.useState([]);
+  const [selectedColunaId, setSelectedColunaId] = React.useState('');
+
+  React.useEffect(() => {
+    const fetchColunas = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5005/quadros/${quadroId}`);
+        setColunas(response.data.columns);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchColunas();
+  }, [quadroId]);
 
   const handleCheckboxChange = async (index) => {
     const updatedSubtasks = [...subtasks];
@@ -22,6 +35,20 @@ const ViewTarefa = ({ tarefa, onUpdateTarefa, quadroId, colunaId }) => {
       });
     } catch (error) {
       console.error('Erro ao atualizar a subtarefa', error);
+    }
+  };
+
+  const handleColunaChange = async (event) => {
+    const newColunaId = event.target.value;
+    setSelectedColunaId(newColunaId);
+
+    try {
+      await axios.patch(`http://localhost:5005/quadros/${quadroId}/colunas/${colunaId}/tarefas/${tarefa._id}/move`, {
+        newColunaId: newColunaId
+      });
+      window.location.assign(`/quadros/${quadroId}`);
+    } catch (error) {
+      console.error('Erro ao mover a tarefa', error);
     }
   };
 
@@ -46,7 +73,18 @@ const ViewTarefa = ({ tarefa, onUpdateTarefa, quadroId, colunaId }) => {
           <label htmlFor={`subtask${index}`}>{subtask.title}</label>
         </CheckBox>
       ))}
-      <InputColunas />
+      <label htmlFor="colunas">Mover para a coluna:</label>
+      <InputColunas 
+        name="colunas" 
+        id="colunas" 
+        value={selectedColunaId} 
+        onChange={handleColunaChange}
+      >
+        <option value="">Selecione uma coluna</option>
+        {colunas.map(coluna => (
+          <option key={coluna._id} value={coluna._id}>{coluna.title}</option>
+        ))}
+      </InputColunas>
     </ModalForm>
   );
 };

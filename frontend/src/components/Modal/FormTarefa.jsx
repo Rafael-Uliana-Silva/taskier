@@ -39,6 +39,7 @@ const FormTarefa = ({ quadroId }) => {
     try {
       const response = await axios.post(`http://localhost:5005/quadros/${quadroId}/colunas/${selectedColunaId}/tarefas`, newTask);
       console.log(response.data);
+      window.location.reload();
     } catch (err) {
       console.error(err);
     }

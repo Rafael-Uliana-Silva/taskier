@@ -3,7 +3,7 @@ import axios from 'axios';
 import { ModalForm, BtnCriar, BtnDeletar, InputColor } from './FormStyle';
 import PropTypes from 'prop-types';
 
-const FormColunaPatch = ({ quadroId, colunaId, onClose }) => {
+const FormColunaPatch = ({ quadroId, colunaId }) => {
   const [title, setTitle] = React.useState('');
   const [color, setColor] = React.useState('#ffffff');
 
@@ -31,7 +31,7 @@ const FormColunaPatch = ({ quadroId, colunaId, onClose }) => {
         title,
         color
       });
-      onClose(); // Fecha o modal após a atualização
+      window.location.reload();  
     } catch (error) {
       console.error('Erro ao atualizar a coluna:', error);
     }
@@ -40,7 +40,7 @@ const FormColunaPatch = ({ quadroId, colunaId, onClose }) => {
   const handleDelete = async () => {
     try {
       await axios.delete(`http://localhost:5005/quadros/${quadroId}/colunas/${colunaId}`);
-      onClose(); // Fecha o modal após a exclusão
+      window.location.reload(); 
     } catch (error) {
       console.error('Erro ao excluir a coluna:', error);
     }
@@ -75,7 +75,6 @@ const FormColunaPatch = ({ quadroId, colunaId, onClose }) => {
 FormColunaPatch.propTypes = {
   quadroId: PropTypes.string.isRequired,
   colunaId: PropTypes.string.isRequired,
-  onClose: PropTypes.func.isRequired,
 };
 
 export default FormColunaPatch;

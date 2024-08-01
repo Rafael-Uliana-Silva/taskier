@@ -23,6 +23,7 @@ const FormColuna = ({ onColunaCreated, quadroId }) => {
       setTitle('');
       setColor('#ffffff');
       if (onColunaCreated) onColunaCreated();
+      window.location.reload(); 
     } catch (err) {
       console.log(err);
     } finally {

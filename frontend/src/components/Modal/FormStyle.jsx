@@ -9,6 +9,7 @@ const ModalForm = styled.form`
   .desc {
     color: #707070;
     margin: 30px 0 15px 0;
+    max-width: 550px;
   }
   .desc span {
     font-weight: 700;
@@ -70,13 +71,15 @@ const CheckBox = styled.div`
   display: flex;
   width: 540px;
   justify-content: flex-start;
+  align-items: center;
   flex-direction: row;
   border-radius: 10px;
   background: #292829;
   padding: 10px;
   margin: 10px 0px;
   input[type="checkbox"] {
-    width: 20px;
+    margin-bottom: 10px;
+    width: 30px;
     padding: 0px;
     margin-right: 10px;
   }

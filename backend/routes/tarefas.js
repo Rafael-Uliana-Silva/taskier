@@ -3,22 +3,32 @@ import Quadro from '../models/quadro.js';
 
 const router = express.Router();
 
+const getQuadroEColuna = async (quadroId, colunaId) => {
+  const quadro = await Quadro.findById(quadroId);
+  if (!quadro) {
+    throw new Error('Quadro não encontrado');
+  }
+  const coluna = quadro.columns.id(colunaId);
+  if (!coluna) {
+    throw new Error('Coluna não encontrada');
+  }
+  return { quadro, coluna };
+};
+
+const getTarefa = (coluna, tarefaId) => {
+  const tarefa = coluna.tasks.id(tarefaId);
+  if (!tarefa) {
+    throw new Error('Tarefa não encontrada');
+  }
+  return tarefa;
+};
+
 router.post('/:quadroId/colunas/:colunaId/tarefas', async (req, res) => {
   const { quadroId, colunaId } = req.params;
   const { title, description, subtasks, classification } = req.body;
 
   try {
-    const quadro = await Quadro.findById(quadroId);
-
-    if (!quadro) {
-      return res.status(404).send('Quadro não encontrado');
-    }
-
-    const coluna = quadro.columns.id(colunaId);
-
-    if (!coluna) {
-      return res.status(404).send('Coluna não encontrada');
-    }
+    const { quadro, coluna } = await getQuadroEColuna(quadroId, colunaId);
 
     const novaTarefa = {
       title,
@@ -29,10 +39,9 @@ router.post('/:quadroId/colunas/:colunaId/tarefas', async (req, res) => {
 
     coluna.tasks.push(novaTarefa);
     await quadro.save();
-
     res.status(201).send('Tarefa criada com sucesso');
   } catch (err) {
-    res.status(500).send('Erro ao criar tarefa');
+    res.status(404).send(err.message);
   }
 });
 
@@ -40,21 +49,10 @@ router.get('/:quadroId/colunas/:colunaId/tarefas', async (req, res) => {
   const { quadroId, colunaId } = req.params;
 
   try {
-    const quadro = await Quadro.findById(quadroId);
-
-    if (!quadro) {
-      return res.status(404).send('Quadro não encontrado');
-    }
-
-    const coluna = quadro.columns.id(colunaId);
-
-    if (!coluna) {
-      return res.status(404).send('Coluna não encontrada');
-    }
-
+    const { coluna } = await getQuadroEColuna(quadroId, colunaId);
     res.json(coluna.tasks);
   } catch (err) {
-    res.status(500).send('Erro ao obter tarefas');
+    res.status(404).send(err.message);
   }
 });
 
@@ -62,27 +60,11 @@ router.get('/:quadroId/colunas/:colunaId/tarefas/:tarefaId', async (req, res) =>
   const { quadroId, colunaId, tarefaId } = req.params;
 
   try {
-    const quadro = await Quadro.findById(quadroId);
-
-    if (!quadro) {
-      return res.status(404).send('Quadro não encontrado');
-    }
-
-    const coluna = quadro.columns.id(colunaId);
-
-    if (!coluna) {
-      return res.status(404).send('Coluna não encontrada');
-    }
-
-    const tarefa = coluna.tasks.id(tarefaId);
-
-    if (!tarefa) {
-      return res.status(404).send('Tarefa não encontrada');
-    }
-
+    const { coluna } = await getQuadroEColuna(quadroId, colunaId);
+    const tarefa = getTarefa(coluna, tarefaId);
     res.json(tarefa);
   } catch (err) {
-    res.status(500).send('Erro ao obter tarefa');
+    res.status(404).send(err.message);
   }
 });
 
@@ -91,38 +73,47 @@ router.patch('/:quadroId/colunas/:colunaId/tarefas/:tarefaId', async (req, res) 
   const { title, description, subtasks, classification } = req.body;
 
   try {
-    const quadro = await Quadro.findById(quadroId);
-
-    if (!quadro) {
-      return res.status(404).send('Quadro não encontrado');
-    }
-
-    const coluna = quadro.columns.id(colunaId);
-
-    if (!coluna) {
-      return res.status(404).send('Coluna não encontrada');
-    }
-
-    const tarefa = coluna.tasks.id(tarefaId);
-
-    if (!tarefa) {
-      return res.status(404).send('Tarefa não encontrada');
-    }
+    const { quadro, coluna } = await getQuadroEColuna(quadroId, colunaId);
+    const tarefa = getTarefa(coluna, tarefaId);
 
     if (title) tarefa.title = title;
     if (description) tarefa.description = description;
-    if (subtasks) tarefa.subtasks = subtasks.map(subtask => 
-      typeof subtask === 'string' 
-        ? { title: subtask, completed: false } 
+    if (subtasks) tarefa.subtasks = subtasks.map(subtask =>
+      typeof subtask === 'string'
+        ? { title: subtask, completed: false }
         : subtask
     );
     if (classification) tarefa.classification = classification;
 
     await quadro.save();
-
     res.json(tarefa);
   } catch (err) {
-    res.status(500).send('Erro ao atualizar tarefa');
+    res.status(404).send(err.message);
+  }
+});
+
+router.patch('/:quadroId/colunas/:colunaId/tarefas/:tarefaId/move', async (req, res) => {
+  const { quadroId, colunaId, tarefaId } = req.params;
+  const { newColunaId } = req.body;
+
+  try {
+    const { quadro, coluna: colunaAtual } = await getQuadroEColuna(quadroId, colunaId);
+    const novaColuna = quadro.columns.id(newColunaId);
+
+    if (!novaColuna) {
+      throw new Error('Nova coluna não encontrada');
+    }
+
+    const tarefa = getTarefa(colunaAtual, tarefaId);
+
+    colunaAtual.tasks = colunaAtual.tasks.filter(task => task._id.toString() !== tarefaId);
+    novaColuna.tasks.push(tarefa);
+
+    await quadro.save();
+    res.send('Tarefa movida com sucesso');
+  } catch (err) {
+    console.error('Erro ao mover tarefa', err);
+    res.status(404).send(err.message);
   }
 });
 
@@ -130,30 +121,15 @@ router.delete('/:quadroId/colunas/:colunaId/tarefas/:tarefaId', async (req, res)
   const { quadroId, colunaId, tarefaId } = req.params;
 
   try {
-    const quadro = await Quadro.findById(quadroId);
+    const { quadro, coluna } = await getQuadroEColuna(quadroId, colunaId);
+    const tarefa = getTarefa(coluna, tarefaId);
 
-    if (!quadro) {
-      return res.status(404).send('Quadro não encontrado');
-    }
+    coluna.tasks = coluna.tasks.filter(task => task._id.toString() !== tarefaId);
 
-    const coluna = quadro.columns.id(colunaId);
-
-    if (!coluna) {
-      return res.status(404).send('Coluna não encontrada');
-    }
-
-    const tarefa = coluna.tasks.id(tarefaId);
-
-    if (!tarefa) {
-      return res.status(404).send('Tarefa não encontrada');
-    }
-
-    tarefa.remove();
     await quadro.save();
-
     res.send('Tarefa deletada com sucesso');
   } catch (err) {
-    res.status(500).send('Erro ao deletar tarefa');
+    res.status(404).send(err.message);
   }
 });
 
