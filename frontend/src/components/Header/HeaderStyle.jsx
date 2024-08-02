@@ -13,7 +13,7 @@ const MainHeader = styled.header`
   background: #323033;
   padding: 15px 30px;
   border-bottom: 1px solid #707070;
-  z-index: 1000;
+  z-index: 10;
   h1 {
     max-width: 500px;
   }

@@ -17,7 +17,7 @@ const ModalForm = styled.form`
 `
 
 const BtnCriar = styled.button`
-
+  font-weight: 700;
 `
 
 const BtnDeletar = styled.button`
@@ -32,7 +32,6 @@ const BtnDeletar = styled.button`
 const BtnSubTask = styled.button`
   margin-top: 15px;
   margin-bottom: 45px;
-  
 `
 
 const InputColor = styled.input`

@@ -91,7 +91,7 @@ const FormTarefaPatch = ({ quadroId, colunaId, tarefa }) => {
         <SubTask key={index} className='subtask'>
         <input 
           type="text"
-          value={subtask.title} // Acessando a propriedade 'title'
+          value={subtask.title}
           onChange={(e) => handleSubTaskChange(index, e.target.value)}
         />
         <span onClick={() => handleRemoveSubTask(index)}>X</span>

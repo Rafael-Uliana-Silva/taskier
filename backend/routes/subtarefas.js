@@ -3,7 +3,6 @@ import Quadro from '../models/quadro.js';
 
 const router = express.Router();
 
-// PATCH: Atualizar uma subtarefa específica
 router.patch('/:quadroId/colunas/:colunaId/tarefas/:tarefaId/subtasks/:subtaskId', async (req, res) => {
   const { quadroId, colunaId, tarefaId, subtaskId } = req.params;
   const { completed } = req.body;
@@ -42,7 +41,6 @@ router.patch('/:quadroId/colunas/:colunaId/tarefas/:tarefaId/subtasks/:subtaskId
   }
 });
 
-// GET: Obter todas as subtarefas de uma tarefa específica
 router.get('/:quadroId/colunas/:colunaId/tarefas/:tarefaId/subtasks', async (req, res) => {
   const { quadroId, colunaId, tarefaId } = req.params;
 
@@ -71,7 +69,6 @@ router.get('/:quadroId/colunas/:colunaId/tarefas/:tarefaId/subtasks', async (req
   }
 });
 
-// POST: Criar uma nova subtarefa para uma tarefa específica
 router.post('/:quadroId/colunas/:colunaId/tarefas/:tarefaId/subtasks', async (req, res) => {
   const { quadroId, colunaId, tarefaId } = req.params;
   const { title } = req.body;
@@ -105,7 +102,6 @@ router.post('/:quadroId/colunas/:colunaId/tarefas/:tarefaId/subtasks', async (re
   }
 });
 
-// DELETE: Deletar uma subtarefa específica
 router.delete('/:quadroId/colunas/:colunaId/tarefas/:tarefaId/subtasks/:subtaskId', async (req, res) => {
   const { quadroId, colunaId, tarefaId, subtaskId } = req.params;
 

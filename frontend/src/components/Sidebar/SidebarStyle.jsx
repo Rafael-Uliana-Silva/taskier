@@ -15,7 +15,7 @@ const StyledSidebar = styled.div`
   flex-direction: column;
   justify-content: space-between;
   border-right: 1px solid #707070;
-  z-index: 1000;
+  z-index: 10;
 
   p {
     display: flex;

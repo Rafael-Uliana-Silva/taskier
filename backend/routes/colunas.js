@@ -3,7 +3,6 @@ import Quadro from '../models/quadro.js';
 
 const router = express.Router();
 
-// Adicionar coluna a um quadro
 router.post('/:id/colunas', async (req, res) => {
   const { id } = req.params;
   const { title, color } = req.body;

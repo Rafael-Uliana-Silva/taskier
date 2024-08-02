@@ -7,6 +7,7 @@ const HomeContainer = styled.div`
   padding: 30px 30px 30px 50px;
   margin-left: ${({ $recolherSide }) => $recolherSide ? '100px' : '250px'};
   transition: margin-left 0.5s;
+  position: relative;
 `
 
 const NovaColuna = styled.div`

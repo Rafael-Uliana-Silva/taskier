@@ -59,7 +59,7 @@ const FormColuna = ({ onColunaCreated, quadroId }) => {
 
 FormColuna.propTypes = {
   onColunaCreated: PropTypes.func,
-  quadroId: PropTypes.string.isRequired, // Adicione isso
+  quadroId: PropTypes.string.isRequired, 
 };
 
 export default FormColuna;

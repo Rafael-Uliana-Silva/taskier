@@ -15,8 +15,6 @@ mongoose.connect(process.env.MONGODB_URI)
 app.use(express.json());
 app.use(cors());
 
-// Rotas
-
 import quadrosRouter from "./routes/quadros.js"
 import colunasRouter from "./routes/colunas.js"
 import tarefasRouter from "./routes/tarefas.js"
