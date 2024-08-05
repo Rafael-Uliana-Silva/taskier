@@ -10,11 +10,11 @@ const StyledSidebar = styled.div`
   left: 0;
   height: 100%;
   width: ${({ $recolherSide }) =>  $recolherSide ? '100px' : '250px'};
-  background: #323033;
+  background: ${({ theme }) => theme.background1};
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border-right: 1px solid #707070;
+  border-right: 1px solid ${({ theme }) => theme.color};
   z-index: 10;
 
   p {
@@ -42,7 +42,7 @@ const StyledList = styled.ul`
   overflow-y: auto;
   overflow-x: hidden;
   li, p {
-    color: #707070;
+    color: ${({ theme }) => theme.color};
     margin: 30px 0;
     padding-left: 15px;
     display: flex;
@@ -73,6 +73,9 @@ const StyledList = styled.ul`
 `;
 
 const StyledLogo = styled(Logo)`
+  #pathLogo{
+    fill: ${({ theme }) => theme.colorAlt};
+  }
   margin-bottom: 40px;
 `;
 
@@ -94,7 +97,7 @@ const SwitchTheme = styled.div`
   padding-bottom: 30px;
 
   p {
-    color: #707070;
+    color: ${({ theme }) => theme.color};
     cursor: pointer;
     display: flex;
     transition: 0.3s;
@@ -107,7 +110,7 @@ const SwitchTheme = styled.div`
   div {
     display: flex;
     justify-content: center;
-    background: #292829;
+    background: ${({ theme }) => theme.background2};
     padding: 5px;
     border-radius: 20px;
     max-width: 80%;
@@ -121,7 +124,7 @@ const ThemeSlider = styled.input`
   border-radius: 20px;
   padding: 2px;
   margin: 0px 20px;
-  background: linear-gradient(-135deg, rgba(116,53,168,1) 0%, rgba(166,67,136,1) 100%);
+  background: ${({ theme }) => theme.background3};
   cursor: pointer;
   transition: 0.3s ease, box-shadow 0.3s ease;
 

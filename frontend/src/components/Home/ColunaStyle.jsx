@@ -24,7 +24,7 @@ const ColunaContent = styled.div`
   display: flex;
   flex-direction: column;
   h2 {
-    color: #707070;
+    color: ${({ theme }) => theme.color};
     display: flex;
     align-items: center;
     margin-bottom: 30px;
@@ -33,7 +33,6 @@ const ColunaContent = styled.div`
     margin-right: 10px;
     height: 10px;
     min-width: 10px;
-    background-color: #FF0000;
     border-radius: 50%;
     border: 1px solid #000;
   }
@@ -46,12 +45,15 @@ const ColunaContent = styled.div`
 const TarefaContent = styled.div`
   width: ${'calc(100% - 20px)'};
   cursor: pointer;
-  background: #323033;
+  background: ${({ theme }) => theme.background2};
   padding: 10px;
   border-radius: 10px;
   margin-bottom: 20px;
   margin-right: 30px;
   transition: 0.3s;
+  p {
+    color: ${({ theme }) => theme.colorAlt};
+  }
   span {
     color: #707070;
     font-size: 12px;

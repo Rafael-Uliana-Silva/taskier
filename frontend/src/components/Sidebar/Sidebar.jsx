@@ -5,20 +5,25 @@ import { NavLink } from 'react-router-dom';
 import { StyledSidebar, QuadrosContainer, StyledLogo, StyledList, IcnQuadro, SwitchTheme, ThemeSlider } from './SidebarStyle.jsx';
 import { icnQuadroRoxo, icnHide, icnLight, icnDark } from "./SidebarIcons.jsx";
 
-const Sidebar = ({ recolherSide, toggleSidebar, abrirModal }) => {
+const Sidebar = ({ recolherSide, toggleSidebar, abrirModal, tema, setTema }) => {
   const [quadros, setQuadros] = React.useState([]);
 
   React.useEffect(() => {
     const fetchQuadros = async () => {
-      try{
-        const response = await axios.get("http://localhost:5005/quadros")
-        setQuadros(response.data)
-      } catch(err) {
-        console.log(err)
+      try {
+        const response = await axios.get("http://localhost:5005/quadros");
+        setQuadros(response.data);
+      } catch (err) {
+        console.log(err);
       }
-    }
-    fetchQuadros()
-  }, [])
+    };
+    fetchQuadros();
+  }, []);
+
+  const handleTema = (event) => {
+    const temaAtual = event.target.value === "1" ? "dark" : "light";
+    setTema(temaAtual);
+  };
 
   return (
     <StyledSidebar $recolherSide={recolherSide}>
@@ -51,7 +56,13 @@ const Sidebar = ({ recolherSide, toggleSidebar, abrirModal }) => {
         {!recolherSide && (
           <div>
             <img src={icnLight} alt="Claro" />
-            <ThemeSlider type="range" min="0" max="1" />
+            <ThemeSlider
+              type="range"
+              min="0"
+              max="1"
+              value={tema === "dark" ? '1' : '0'}
+              onChange={handleTema}
+            />
             <img src={icnDark} alt="Escuro" />
           </div>
         )}
@@ -67,6 +78,8 @@ Sidebar.propTypes = {
   recolherSide: PropTypes.bool.isRequired,
   toggleSidebar: PropTypes.func.isRequired,
   abrirModal: PropTypes.func.isRequired,
+  tema: PropTypes.string.isRequired,
+  setTema: PropTypes.func.isRequired,
 };
 
 export default Sidebar;

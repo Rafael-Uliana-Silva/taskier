@@ -14,7 +14,7 @@ const NovaColuna = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #2D2D2E;
+  background: ${({ theme }) => theme.background2};
   padding: 30px;
   height: 600px;
   border-radius: 10px;
@@ -22,7 +22,7 @@ const NovaColuna = styled.div`
   margin-right: 30px;
   transition: 0.3s;
   h2 {
-    color: #707070;
+    color: ${({ theme }) => theme.color};
     width: 200px;
     text-align: center;
   }

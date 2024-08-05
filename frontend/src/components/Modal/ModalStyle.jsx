@@ -30,12 +30,15 @@ const ModalContent = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  background: #323033;
+  background: ${({ theme }) => theme.background1};
   padding: 20px;
-  color: #fff;
+  color: ${({ theme }) => theme.color};
   border-radius: 20px 10px 10px 20px;
   font-family: Inter;
   animation: ${slideDown} 0.3s ease-out;
+  h1 {
+    color: ${({ theme }) => theme.colorAlt};
+  }
   &&::-webkit-scrollbar {
     background-color: #707070;
     border-radius: 0px 20px 20px 0px;
@@ -48,7 +51,7 @@ const ModalContent = styled.div`
 
 const CloseButton = styled.button`
   font-family: Inter;
-  color: #fff;
+  color: ${({ theme }) => theme.color};
   position: absolute;
   top: 10px;
   right: 10px;

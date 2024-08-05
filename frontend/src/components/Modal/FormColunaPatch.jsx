@@ -24,8 +24,8 @@ const FormColunaPatch = ({ quadroId, colunaId }) => {
   const handleTitleChange = (event) => setTitle(event.target.value);
   const handleColorChange = (event) => setColor(event.target.value);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     try {
       await axios.patch(`http://localhost:5005/quadros/${quadroId}/colunas/${colunaId}`, {
         title,

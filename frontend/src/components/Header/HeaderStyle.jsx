@@ -10,7 +10,7 @@ const MainHeader = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #323033;
+  background: ${({ theme }) => theme.background1};
   padding: 15px 30px;
   border-bottom: 1px solid #707070;
   z-index: 10;
