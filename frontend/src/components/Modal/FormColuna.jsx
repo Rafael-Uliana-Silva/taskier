@@ -40,6 +40,7 @@ const FormColuna = ({ onColunaCreated, quadroId }) => {
         value={title}
         onChange={handleTitle}
         disabled={loading}
+        required={true}
       />
       <label htmlFor="cor">Cor da coluna</label>
       <InputColor

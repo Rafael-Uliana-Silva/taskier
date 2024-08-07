@@ -39,6 +39,7 @@ const FormQuadro = () => {
         onChange={handleTitle}
         placeholder='Ex: Quadro 1'
         disabled={loading}
+        required={true}
       />
       <BtnCriar className='btn' type='submit' disabled={loading}>
         <p>{loading ? 'Criando...' : 'Criar Quadro'}</p>

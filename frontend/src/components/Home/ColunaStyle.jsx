@@ -45,7 +45,7 @@ const ColunaContent = styled.div`
 const TarefaContent = styled.div`
   width: ${'calc(100% - 20px)'};
   cursor: pointer;
-  background: ${({ theme }) => theme.background2};
+  background: ${({ theme }) => theme.background1};
   padding: 10px;
   border-radius: 10px;
   margin-bottom: 20px;

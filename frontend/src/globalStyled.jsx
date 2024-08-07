@@ -3,6 +3,7 @@ import { createGlobalStyle } from "styled-components";
 const globalStyle = createGlobalStyle`
   :root {
     --background: ${({ theme }) => theme.background1};
+    --background: ${({ theme }) => theme.background2};
     --text-color-alt: ${({ theme }) => theme.colorAlt};
     --text-color: ${({ theme }) => theme.color};
   }

@@ -11,7 +11,6 @@ import { darkTheme, lightTheme } from './theme.jsx';
 import GlobalStyle from "./globalStyled.jsx";
 
 const App = () => {
-  // Carregar o tema do localStorage, ou usar "dark" como padrão
   const [tema, setTema] = React.useState(() => {
     const temaSalvo = localStorage.getItem("tema");
     return temaSalvo ? temaSalvo : "dark";
@@ -45,7 +44,7 @@ const App = () => {
     setModalAberto(false);
     setTarefaSelecionada(null);
   };
-
+ 
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />

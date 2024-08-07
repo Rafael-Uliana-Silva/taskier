@@ -65,6 +65,7 @@ const FormTarefa = ({ quadroId }) => {
         placeholder='Ex: Codificar Interface' 
         value={title}
         onChange={(e) => setTitle(e.target.value)}
+        required={true}
       />
       <label htmlFor="desc">Descrição</label>
       <textarea 
@@ -81,6 +82,7 @@ const FormTarefa = ({ quadroId }) => {
             type="text"
             value={subtask}
             onChange={(e) => handleSubTaskChange(index, e.target.value)}
+            required={true}
           />
           <span onClick={() => handleRemoveSubTask(index)}>X</span>
         </SubTask>
@@ -94,6 +96,7 @@ const FormTarefa = ({ quadroId }) => {
         id="colunas" 
         value={selectedColunaId} 
         onChange={(e) => setSelectedColunaId(e.target.value)}
+        required={true}
       >
         <option value="">Selecione uma coluna</option>
         {colunas.map(coluna => (

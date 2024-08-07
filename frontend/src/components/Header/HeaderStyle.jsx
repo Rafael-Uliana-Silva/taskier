@@ -16,6 +16,7 @@ const MainHeader = styled.header`
   z-index: 10;
   h1 {
     max-width: 500px;
+    color: ${({ theme}) => theme.colorAlt};
   }
 `;
 

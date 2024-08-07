@@ -14,7 +14,7 @@ const NovaColuna = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: ${({ theme }) => theme.background2};
+  background: ${({ theme }) => theme.background1};
   padding: 30px;
   height: 600px;
   border-radius: 10px;
