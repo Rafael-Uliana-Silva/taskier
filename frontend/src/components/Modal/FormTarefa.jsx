@@ -37,7 +37,7 @@ const FormTarefa = ({ quadroId }) => {
     };
 
     try {
-      const response = await axios.post(`http://localhost:5005/quadros/${quadroId}/colunas/${selectedColunaId}/tarefas`, newTask);
+      const response = await axios.post(`https://taskier-mern-app.onrender.com/quadros/${quadroId}/colunas/${selectedColunaId}/tarefas`, newTask);
       console.log(response.data);
       window.location.reload();
     } catch (err) {
@@ -48,7 +48,7 @@ const FormTarefa = ({ quadroId }) => {
   React.useEffect(() => {
     const fetchColunas = async () => {
       try {
-        const response = await axios.get(`http://localhost:5005/quadros/${quadroId}`);
+        const response = await axios.get(`https://taskier-mern-app.onrender.com/quadros/${quadroId}`);
         setColunas(response.data.columns);
       } catch (err) {
         console.error(err);

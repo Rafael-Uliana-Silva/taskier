@@ -19,7 +19,7 @@ const FormColuna = ({ onColunaCreated, quadroId }) => {
     }
     setLoading(true);
     try {
-      await axios.post(`http://localhost:5005/quadros/${quadroId}/colunas`, { title, color });
+      await axios.post(`https://taskier-mern-app.onrender.com/quadros/${quadroId}/colunas`, { title, color });
       setTitle('');
       setColor('#ffffff');
       if (onColunaCreated) onColunaCreated();

@@ -11,7 +11,7 @@ const FormQuadroPatch = ({ quadroId }) => {
   React.useEffect(() => {
     const fetchQuadroData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5005/quadros/${quadroId}`);
+        const response = await axios.get(`https://taskier-mern-app.onrender.com/quadros/${quadroId}`);
         setTitle(response.data.title || '');
       } catch (error) {
         console.error('Erro ao buscar dados do quadro:', error);
@@ -28,7 +28,7 @@ const FormQuadroPatch = ({ quadroId }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.patch(`http://localhost:5005/quadros/${quadroId}`, { title });
+      await axios.patch(`https://taskier-mern-app.onrender.com/quadros/${quadroId}`, { title });
       window.location.reload();
     } catch (error) {
       console.error('Erro ao atualizar o quadro:', error);
@@ -37,7 +37,7 @@ const FormQuadroPatch = ({ quadroId }) => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:5005/quadros/${quadroId}`);
+      await axios.delete(`https://taskier-mern-app.onrender.com/quadros/${quadroId}`);
       navigate('/');
       window.location.reload();
     } catch (error) {

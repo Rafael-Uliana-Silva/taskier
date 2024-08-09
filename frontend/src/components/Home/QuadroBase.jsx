@@ -16,7 +16,7 @@ const Codigo = ({ recolherSide, abrirModal, setQuadroId }) => {
     setQuadroId(id);
     const fetchDadosQuadro = async () => {
       try {
-        const response = await axios.get(`http://localhost:5005/quadros/${id}`);
+        const response = await axios.get(`https://taskier-mern-app.onrender.com/quadros/${id}`);
         setColunas(response.data.columns || []);
       } catch (err) {
         console.log('Erro ao buscar dados do quadro:', err);
@@ -37,7 +37,7 @@ const Codigo = ({ recolherSide, abrirModal, setQuadroId }) => {
   const updateColumnOrder = async (newColunas) => {
     try {
       const columnOrder = newColunas.map(coluna => coluna._id);
-      await axios.patch(`http://localhost:5005/quadros/${id}/updateordem`, { columnOrder });
+      await axios.patch(`https://taskier-mern-app.onrender.com/quadros/${id}/updateordem`, { columnOrder });
     } catch (err) {
       console.error('Erro ao atualizar a ordem das colunas:', err);
     }

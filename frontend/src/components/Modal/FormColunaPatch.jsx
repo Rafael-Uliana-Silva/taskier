@@ -10,7 +10,7 @@ const FormColunaPatch = ({ quadroId, colunaId }) => {
   React.useEffect(() => {
     const fetchColunaData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5005/quadros/${quadroId}/colunas/${colunaId}`);
+        const response = await axios.get(`https://taskier-mern-app.onrender.com/quadros/${quadroId}/colunas/${colunaId}`);
         setTitle(response.data.title);
         setColor(response.data.color);
       } catch (err) {
@@ -27,7 +27,7 @@ const FormColunaPatch = ({ quadroId, colunaId }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axios.patch(`http://localhost:5005/quadros/${quadroId}/colunas/${colunaId}`, {
+      await axios.patch(`https://taskier-mern-app.onrender.com/quadros/${quadroId}/colunas/${colunaId}`, {
         title,
         color
       });
@@ -39,7 +39,7 @@ const FormColunaPatch = ({ quadroId, colunaId }) => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:5005/quadros/${quadroId}/colunas/${colunaId}`);
+      await axios.delete(`https://taskier-mern-app.onrender.com/quadros/${quadroId}/colunas/${colunaId}`);
       window.location.reload(); 
     } catch (error) {
       console.error('Erro ao excluir a coluna:', error);

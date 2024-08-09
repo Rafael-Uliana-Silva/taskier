@@ -12,7 +12,7 @@ const Header = ({ recolherSide, abrirModal, quadroId }) => {
       if (!quadroId) return; 
 
       try {
-        const response = await axios.get(`http://localhost:5005/quadros/${quadroId}`);
+        const response = await axios.get(`https://taskier-mern-app.onrender.com/quadros/${quadroId}`);
         setQuadroTitle(response.data.title);
         setHasColumns(response.data.columns.length > 0); 
       } catch (err) {

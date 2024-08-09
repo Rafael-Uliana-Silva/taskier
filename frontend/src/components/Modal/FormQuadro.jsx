@@ -16,7 +16,7 @@ const FormQuadro = () => {
     event.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.post("http://localhost:5005/quadros", { title });
+      const response = await axios.post("https://taskier-mern-app.onrender.com/quadros", { title });
       console.log("Resposta do servidor:", response.data);
       const quadroId = response.data._id;
       setTitle('');

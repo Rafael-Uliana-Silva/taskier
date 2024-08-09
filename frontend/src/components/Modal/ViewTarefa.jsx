@@ -11,7 +11,7 @@ const ViewTarefa = ({ tarefa, onUpdateTarefa, quadroId, colunaId, abrirModal }) 
   React.useEffect(() => {
     const fetchColunas = async () => {
       try {
-        const response = await axios.get(`http://localhost:5005/quadros/${quadroId}`);
+        const response = await axios.get(`https://taskier-mern-app.onrender.com/quadros/${quadroId}`);
         setColunas(response.data.columns);
       } catch (err) {
         console.error(err);
@@ -30,7 +30,7 @@ const ViewTarefa = ({ tarefa, onUpdateTarefa, quadroId, colunaId, abrirModal }) 
     }
 
     try {
-      await axios.patch(`http://localhost:5005/quadros/${quadroId}/colunas/${colunaId}/tarefas/${tarefa._id}/subtasks/${updatedSubtasks[index]._id}`, {
+      await axios.patch(`https://taskier-mern-app.onrender.com/quadros/${quadroId}/colunas/${colunaId}/tarefas/${tarefa._id}/subtasks/${updatedSubtasks[index]._id}`, {
         completed: updatedSubtasks[index].completed
       });
     } catch (error) {
@@ -43,7 +43,7 @@ const ViewTarefa = ({ tarefa, onUpdateTarefa, quadroId, colunaId, abrirModal }) 
     setSelectedColunaId(newColunaId);
 
     try {
-      await axios.patch(`http://localhost:5005/quadros/${quadroId}/colunas/${colunaId}/tarefas/${tarefa._id}/move`, {
+      await axios.patch(`https://taskier-mern-app.onrender.com/quadros/${quadroId}/colunas/${colunaId}/tarefas/${tarefa._id}/move`, {
         newColunaId: newColunaId
       });
       window.location.assign(`/quadros/${quadroId}`);

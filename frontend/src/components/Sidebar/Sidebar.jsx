@@ -11,7 +11,7 @@ const Sidebar = ({ recolherSide, toggleSidebar, abrirModal, tema, setTema, isMod
   React.useEffect(() => {
     const fetchQuadros = async () => {
       try {
-        const response = await axios.get("http://localhost:5005/quadros");
+        const response = await axios.get("https://taskier-mern-app.onrender.com/quadros");
         setQuadros(response.data);
       } catch (err) {
         console.log(err);

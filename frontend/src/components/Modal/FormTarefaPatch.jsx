@@ -8,7 +8,7 @@ const FormTarefaPatch = ({ quadroId, colunaId, tarefa }) => {
   const [description, setDescription] = React.useState('');
   const [subtasks, setSubtasks] = React.useState([]);
 
-  const urlTarefa = `http://localhost:5005/quadros/${quadroId}/colunas/${colunaId}/tarefas/${tarefa._id}`
+  const urlTarefa = `https://taskier-mern-app.onrender.com/quadros/${quadroId}/colunas/${colunaId}/tarefas/${tarefa._id}`
 
   React.useEffect(() => {
     const fetchTarefaData = async () => {
