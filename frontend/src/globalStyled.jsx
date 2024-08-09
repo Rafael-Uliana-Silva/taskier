@@ -92,6 +92,21 @@ const globalStyle = createGlobalStyle`
   textarea {
     resize: vertical;
   }
+
+  @media (max-width: 480px) {
+    h1 {
+      font-size: 24px;
+    }
+    h2 {
+      font-size: 16px;
+    }
+    h3 {
+      font-size: 12px;
+    }
+    p {
+      font-size: 12px;
+    }
+  } 
 `
 
 export default globalStyle;

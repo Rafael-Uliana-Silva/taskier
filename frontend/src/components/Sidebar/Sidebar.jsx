@@ -1,11 +1,11 @@
 import React from 'react';
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import { NavLink } from 'react-router-dom';
 import { StyledSidebar, QuadrosContainer, StyledLogo, StyledList, IcnQuadro, SwitchTheme, ThemeSlider } from './SidebarStyle.jsx';
 import { icnQuadroRoxo, icnHide, icnLight, icnDark } from "./SidebarIcons.jsx";
 
-const Sidebar = ({ recolherSide, toggleSidebar, abrirModal, tema, setTema }) => {
+const Sidebar = ({ recolherSide, toggleSidebar, abrirModal, tema, setTema, isModal}) => {
   const [quadros, setQuadros] = React.useState([]);
 
   React.useEffect(() => {
@@ -26,7 +26,7 @@ const Sidebar = ({ recolherSide, toggleSidebar, abrirModal, tema, setTema }) => 
   };
 
   return (
-    <StyledSidebar $recolherSide={recolherSide}>
+    <StyledSidebar $recolherSide={recolherSide} isModal={isModal}>
       {!recolherSide && (
         <QuadrosContainer>
           <StyledLogo />
@@ -75,11 +75,12 @@ const Sidebar = ({ recolherSide, toggleSidebar, abrirModal, tema, setTema }) => 
 };
 
 Sidebar.propTypes = {
-  recolherSide: PropTypes.bool.isRequired,
-  toggleSidebar: PropTypes.func.isRequired,
-  abrirModal: PropTypes.func.isRequired,
-  tema: PropTypes.string.isRequired,
-  setTema: PropTypes.func.isRequired,
+  recolherSide: PropTypes.bool,
+  toggleSidebar: PropTypes.func,
+  abrirModal: PropTypes.func,
+  tema: PropTypes.string,
+  setTema: PropTypes.func,
+  isModal: PropTypes.bool,
 };
 
 export default Sidebar;

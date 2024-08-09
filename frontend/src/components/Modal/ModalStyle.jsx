@@ -47,6 +47,9 @@ const ModalContent = styled.div`
   &&::-webkit-scrollbar-thumb {
     background-color: #fff;
   }
+  @media (max-width: 480px) { 
+    max-width: 50%;
+  }
 `;
 
 const CloseButton = styled.button`

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import IcnOpt from '../../assets/icnOpt.svg?react';
+import IcnShow from '../../assets/icnShow.svg?react';
 
 const MainHeader = styled.header`
   transition: 0.5s;
@@ -18,6 +19,10 @@ const MainHeader = styled.header`
     max-width: 500px;
     color: ${({ theme}) => theme.colorAlt};
   }
+  @media (max-width: 480px) {
+    width: 90%;
+    right: 0;
+  }
 `;
 
 const IconOption = styled(IcnOpt)`
@@ -30,6 +35,18 @@ const IconOption = styled(IcnOpt)`
   }
 `;
 
+const IconShow = styled(IcnShow)`
+  display: none;
+  transition: 0.3s;
+  cursor: pointer;
+  &:hover {
+    filter: drop-shadow(0 0 10px #707070);
+  }
+  @media (max-width: 480px) {
+    display: inline-block;
+  }
+`
+
 const ButtonContainer = styled.div`
   display: flex;
   align-items: center;
@@ -39,4 +56,4 @@ const ButtonContainer = styled.div`
 }
 `;
 
-export { MainHeader, ButtonContainer, IconOption };
+export { MainHeader, ButtonContainer, IconOption, IconShow };

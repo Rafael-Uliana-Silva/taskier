@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { MainHeader, ButtonContainer, IconOption } from './HeaderStyle.jsx';
+import { MainHeader, ButtonContainer, IconOption, IconShow } from './HeaderStyle.jsx';
 
 const Header = ({ recolherSide, abrirModal, quadroId }) => {
   const [quadroTitle, setQuadroTitle] = React.useState('');
@@ -25,7 +25,7 @@ const Header = ({ recolherSide, abrirModal, quadroId }) => {
 
   return (
     <MainHeader $recolherSide={recolherSide}>
-      <h1>{quadroTitle}</h1>
+      <h1>{quadroTitle} <span><IconShow onClick={() => abrirModal('sidebarMobile')}/></span></h1>
       <ButtonContainer>
         <button className={`btn ${!hasColumns ? 'btn-disabled' : ''}`} onClick={() => abrirModal('tarefa')} disabled={!hasColumns}>
           + Adicionar Tarefa

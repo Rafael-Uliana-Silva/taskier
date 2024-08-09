@@ -40,6 +40,9 @@ const ColunaContent = styled.div`
     display: flex;
     justify-content: space-between;
   }
+  @media (max-width: 480px) { 
+    max-width: 200px;
+  }
 `
 
 const TarefaContent = styled.div`

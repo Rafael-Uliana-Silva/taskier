@@ -16,7 +16,6 @@ const StyledSidebar = styled.div`
   justify-content: space-between;
   border-right: 1px solid ${({ theme }) => theme.color};
   z-index: 10;
-
   p {
     display: flex;
     align-items: center;
@@ -32,6 +31,14 @@ const StyledSidebar = styled.div`
   span:hover {
     text-shadow: 0px 0px 10px #7435A8;
   }
+
+  ${({ isMobile }) => !isMobile && `
+    @media (max-width: 480px) {
+      position: relative;
+      display: block;
+      padding-top: 30px;
+    }
+  `}
 `;
 
 const StyledList = styled.ul`
@@ -77,6 +84,9 @@ const StyledLogo = styled(Logo)`
     fill: ${({ theme }) => theme.colorAlt};
   }
   margin-bottom: 40px;
+  @media (max-width: 480px) {
+    display: none;
+  }
 `;
 
 const IcnQuadro = styled(icnQuadro)`
@@ -94,13 +104,18 @@ const QuadrosContainer = styled.div`
 `;
 
 const SwitchTheme = styled.div`
-  padding-bottom: 30px;
-
+    padding-top: 30px;
+    padding-bottom: 30px;
   p {
     color: ${({ theme }) => theme.color};
     cursor: pointer;
     display: flex;
     transition: 0.3s;
+    ${({ isMobile }) => !isMobile && `
+    @media (max-width: 480px) {
+      display: none;
+    }
+  `}
   }
 
   p:hover {

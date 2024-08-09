@@ -8,9 +8,10 @@ import ViewTarefa from './ViewTarefa';
 import FormQuadroPatch from './FormQuadroPatch';
 import FormColunaPatch from './FormColunaPatch';
 import FormTarefaPatch from './FormTarefaPatch';
+import SidebarMobile from './SidebarMobile';
 
 
-const Modal = ({ abrirModal, fecharModal, type, quadroId, colunaId, tarefa}) => {
+const Modal = ({ abrirModal, fecharModal, type, quadroId, colunaId, tarefa, tema, setTema}) => {
   const clickOutside = (event) => {
     if (event.target === event.currentTarget) {
       fecharModal();
@@ -28,6 +29,7 @@ const Modal = ({ abrirModal, fecharModal, type, quadroId, colunaId, tarefa}) => 
         {type === 'quadroPatch' && (<FormQuadroPatch quadroId={quadroId} />)}
         {type === 'colunaPatch' && (<FormColunaPatch quadroId={quadroId} colunaId={colunaId} />)}
         {type === 'tarefaPatch' && (<FormTarefaPatch quadroId={quadroId} colunaId={colunaId} tarefa={tarefa}/>)}
+        {type === 'sidebarMobile' && (<SidebarMobile abrirModal={abrirModal} tema={tema} setTema={setTema} />)}
       </ModalContent>
     </ModalContainer>
   );
@@ -41,6 +43,8 @@ Modal.propTypes = {
   quadroId: PropTypes.string, 
   colunaId: PropTypes.string, 
   tarefa: PropTypes.object,
+  tema: PropTypes.string,
+  setTema: PropTypes.func,
 };
 
 export default Modal;

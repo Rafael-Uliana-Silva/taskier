@@ -8,6 +8,12 @@ const HomeContainer = styled.div`
   margin-left: ${({ $recolherSide }) => $recolherSide ? '100px' : '250px'};
   transition: margin-left 0.5s;
   position: relative;
+  @media (max-width: 480px) {
+    width: 100%;
+    margin-left: 0;
+    padding: 10px;
+    padding-top: 30px;
+  } 
 `
 
 const NovaColuna = styled.div`
@@ -28,6 +34,10 @@ const NovaColuna = styled.div`
   }
   &&:hover{
     scale: 102%;
+  }
+  @media (max-width: 480px) { 
+    height: 500px;
+    padding: 15px;
   }
 `
 

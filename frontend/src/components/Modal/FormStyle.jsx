@@ -14,6 +14,11 @@ const ModalForm = styled.form`
   .desc span {
     font-weight: 700;
   }
+  @media (max-width: 480px) { 
+    input, textarea {
+      max-width: 90%;
+    }
+  }
 `
 
 const BtnCriar = styled.button`
@@ -87,6 +92,9 @@ const CheckBox = styled.div`
   input[type="checkbox"]:checked + label {
    color: #707070;
    text-decoration: line-through;
+  }
+  @media (max-width: 480px) { 
+    max-width: 90%;
   }
 `
 
